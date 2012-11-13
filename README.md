@@ -15,6 +15,6 @@ We're currently using the following technologies:
  * jQuery
  * DataTables
 
-Initially the project will provide support for CfEngine, but the database
+Initially the project will provide support for CFEngine, but the database
 design is pretty flexibile, and support for other backends should be
 relatively easy to add.
