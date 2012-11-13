@@ -3,7 +3,7 @@ noma
 
 Node Management: a web interface for managing the configuration of nodes
 
-Current status: setting up the project
+Current status: setting up the project. There is no usable code yet.
 
 Noma will be a webbased interface for managing large collections of nodes.
 
