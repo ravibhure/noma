@@ -1,5 +1,5 @@
-noma
-====
+NoMa: Node Management with good taste!
+======================================
 
 Node Management: a web interface for managing the configuration of nodes
 
