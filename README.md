@@ -45,7 +45,8 @@ under the MIT license.
 * The system/ folder contains the CodeIgniter core. That is licensed using the
 license described in system/license.txt.
 
-* Everything under the application/datamapper folder uses the MIT license.
+* Everything under the application/datamapper and
+application/third_party/datamapper folders uses the MIT license.
 
 * Noma makes use of CIUnit for unit testing. CIUnit lives under
 application/third_party/CIUnit. CIUnit is licensed under the MIT license. See
