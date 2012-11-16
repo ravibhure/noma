@@ -17,8 +17,8 @@ class CI_Smarty extends Smarty {
 	{
 		parent::Smarty();
 
-		$this->compile_dir = APPPATH . "views/templates_c";
-		$this->template_dir = APPPATH . "views/templates";
+		$this->compile_dir = APPPATH . "templates_c";
+		$this->template_dir = APPPATH . "templates";
 		$this->assign( 'APPPATH', APPPATH );
 		$this->assign( 'BASEPATH', BASEPATH );
 
@@ -29,8 +29,8 @@ class CI_Smarty extends Smarty {
 	{
 		parent::__construct();
 
-		$this->compile_dir = APPPATH . "views/templates_c";
-		$this->template_dir = APPPATH . "views/templates";
+		$this->compile_dir = APPPATH . "templates_c";
+		$this->template_dir = APPPATH . "templates";
 		$this->assign( 'APPPATH', APPPATH );
 		$this->assign( 'BASEPATH', BASEPATH );
 
@@ -49,7 +49,7 @@ class CI_Smarty extends Smarty {
 	 *  Parse a template using the Smarty engine
 	 *
 	 * This is a convenience method that combines assign() and
-	 * display() into one step. 
+	 * display() into one step.
 	 *
 	 * Values to assign are passed in an associative array of
 	 * name => value pairs.
@@ -69,7 +69,7 @@ class CI_Smarty extends Smarty {
 		{
 			$this->assign($key, $val);
 		}
-		
+
 		if ($return == FALSE)
 		{
 			$CI =& get_instance();
