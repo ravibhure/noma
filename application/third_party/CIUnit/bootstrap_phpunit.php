@@ -255,6 +255,9 @@ exit;
 // Load the CIUnit CodeIgniter Core
 require_once CIUPATH . 'core/CodeIgniter.php';
 
+// NOMAMOD: Load DataMapper support
+require_once APPPATH.'third_party/datamapper/bootstrap.php';
+
 // Autoload the PHPUnit Framework
 require_once ('PHPUnit/Autoload.php');
 

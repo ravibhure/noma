@@ -1404,6 +1404,29 @@ class CI_DB_driver {
 	{
 	}
 
+    /**
+     * NOMAMOD: required for phpunit and DataMapper
+     */
+    public function dm_call_method($function, $p1 = null, $p2 = null, $p3 = null, $p4 = null)
+    {
+        switch (func_num_args())
+        {
+            case 1:
+                return $this->{$function}();
+            case 2:
+                return $this->{$function}($p1);
+                break;
+            case 3:
+                return $this->{$function}($p1, $p2);
+                break;
+            case 4:
+                return $this->{$function}($p1, $p2, $p3);
+                break;
+            case 5:
+                return $this->{$function}($p1, $p2, $p3, $p4);
+                break;
+        }
+    }
 }
 
 /* End of file DB_driver.php */
