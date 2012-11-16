@@ -30,23 +30,24 @@ Initially the project will provide support for CFEngine, but the database
 design is pretty flexible, and support for other backends should be relatively
 easy to add.
 
-Licensing
----------
+Licensing and copyright
+-----------------------
+
+If a file contains specific licensing and/or copyright details, those apply to
+that file. If a file does not contain licensing or copyright details:
 
 * The actual Noma applcation code is written inside the
 application/controllers, application/models, application/migrations and
 application/templates directories. That code is licensed under GPLv3. A copy is
-distributed at doc/GPLv3.txt.
-
-* If a file contains specific licensing details, those apply to that file. This
-mostly applies to some datamapper files in application/ which are licensed
-under the MIT license.
+distributed at doc/GPLv3.txt. It's available online as well at
+http://www.gnu.org/licenses/gpl-3.0.txt
 
 * The system/ folder contains the CodeIgniter core. That is licensed using the
 license described in system/license.txt.
 
 * Everything under the application/datamapper and
-application/third_party/datamapper folders uses the MIT license.
+application/third_party/datamapper folders uses the MIT license. See
+http://opensource.org/licenses/mit-license.php
 
 * Noma makes use of CIUnit for unit testing. CIUnit lives under
 application/third_party/CIUnit. CIUnit is licensed under the MIT license. See
