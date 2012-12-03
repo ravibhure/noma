@@ -1,0 +1,37 @@
+{% extends 'NomaNomaBundle::base.html.twig' %}
+
+{% block content %}
+<h2>Services</h2>
+<form method="post">
+    {{ form_widget(form) }}
+    <input type="submit" value="Save">
+</form>
+
+<table id="servicelist">
+    <thead>
+        <tr><th>Service</th><th>Nodes</th></tr>
+    </thead>
+    <tbody>
+        {% if nodeprops %}
+        {% for nodeprop in nodeprops%}
+        <tr>
+            <td>{{ nodeprop.getContent() }}</td>
+            <td>
+                {% for n in nodeprop.getNodes() %}
+                {{ n.getName() }},
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% else %}
+        <tr><td colspan="2">No services found</td></tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function() {
+        $('#servicelist').dataTable({'bJQueryUI': true});
+    });
+</script>
+{% endblock %}

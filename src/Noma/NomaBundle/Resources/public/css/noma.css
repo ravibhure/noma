@@ -1,0 +1,16 @@
+body, table {
+    font-family: Verdana, sans;
+    font-size: 12px;
+}
+
+th {
+    text-align: left;
+}
+
+td {
+    vertical-align: top;
+}
+
+select.nodeprop {
+    width: 300px;
+}

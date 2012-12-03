@@ -1,0 +1,7 @@
+noma_noma_homepage:
+    pattern:  /home/
+    defaults: { _controller: NomaNomaBundle:Default:index }
+
+noma_noma_services:
+    pattern: /services/
+    defaults: { _controller: NomaNomaBundle:Services:index }

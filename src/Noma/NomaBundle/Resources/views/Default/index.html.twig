@@ -1,0 +1,12 @@
+{% extends 'NomaNomaBundle::base.html.twig' %}
+
+{% block content %}
+<ul>
+{% for node in nodes %}
+<li>{{ node.getName() }}</li>
+    {% for prop in node.getNodeProps() %}
+        {{ prop.getNodePropDef().getName() }}: {{ prop.getContent() }}
+    {% endfor %}
+{% endfor %}
+</ul>
+{% endblock %}

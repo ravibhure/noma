@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}Noma{% endblock %}</title>
+
+        {% stylesheets output='css/styles.css' filter='cssrewrite'
+        '../vendor/twitter/bootstrap/css/bootstrap.min.css'
+        '../vendor/twitter/bootstrap/css/bootstrap-responsive.css'
+        '../vendor/jquery-ui/css/smoothness/jquery-ui-1.9.*.custom.css'
+        '../vendor/datatables/media/css/jquery.dataTables.css'
+        '../vendor/select2/select2.css'
+        'bundles/nomanoma/css/noma.css'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% javascripts filter=''
+        '../vendor/jquery/jquery-1.8.*.js'
+        '../vendor/twitter/bootstrap/js/bootstrap.min.js'
+        '../vendor/jquery-ui/js/jquery-ui-1.9.*.custom.js'
+        '../vendor/datatables/media/js/jquery.dataTables.js'
+        '../vendor/select2/select2.min.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        {% block head_extra %}{% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <a class="brand" href="#">Noma</a>
+                    <ul class="nav">
+                        <li class="active">
+                            <a href="{{ path('noma_noma_homepage') }}">nodes</a>
+                        </li>
+                        <li><a href="{{ path('noma_noma_services') }}">services</a></li>
+                        <li><a href="/noma/nodepropdefs/index/">nodepropdefs</a></li>
+                        <li><a href="/noma/cf_promises/index/">cf_promises</a></li>
+                        <li><a href="/noma/cf_promiseprops/index/">cf_promiseprops</a></li>
+                        <li><a href="/noma/cf_promisepropdefs/index/">cf_promisepropdefs</a></li>
+                        <li><a href="/noma/cf_files/index/">cf_files</a></li>
+                    </ul>
+                </div>
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>
