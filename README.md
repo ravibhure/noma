@@ -17,7 +17,7 @@ Noma will be a webbased interface for managing large collections of nodes.
 We're currently using the following technologies:
 
  * PHP 5
- * Symfony 2.1.3 (with Doctrine, Twig, phpunit, ...)
+ * Symfony 2 (with Doctrine, Twig, phpunit, ...)
  * jQuery
  * Twitter Bootstrap
 
@@ -54,7 +54,6 @@ Noma Authors
 Noma Copyright
 --------------
 Copyright (c) 2012 Jochem Kossen, Ivo Schooneman
-
 
 Symfony2 Copyright
 ------------------
