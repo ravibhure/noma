@@ -5,3 +5,8 @@ noma_noma_homepage:
 noma_noma_services:
     pattern: /services/
     defaults: { _controller: NomaNomaBundle:Services:index }
+
+noma_noma_api_json_nodes:
+    pattern: /api/json_get_nodes/
+    defaults: { _controller: NomaNomaBundle:Api:jsonGetNodes }
+
