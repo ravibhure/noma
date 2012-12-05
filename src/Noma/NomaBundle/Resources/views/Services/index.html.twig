@@ -1,13 +1,16 @@
 {% extends 'NomaNomaBundle::base.html.twig' %}
 
 {% block content %}
-<h2>Services</h2>
-<form method="post">
-    {{ form_widget(form) }}
-    <input type="submit" value="Save">
+<h1>Services</h1>
+<form method="post" class="form-inline">
+    <fieldset>
+        {{ form_widget(form.content, { 'attr': {'placeholder': 'Service'} }) }}
+        <input type="submit" value="Save" class="btn">
+        {{ form_rest(form) }}
+    </fieldset>
 </form>
 
-<table id="servicelist">
+<table id="servicelist" class="table table-striped">
     <thead>
         <tr><th>Service</th><th>Nodes</th></tr>
     </thead>
@@ -31,7 +34,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#servicelist').dataTable({'bJQueryUI': true});
+        $('#nav-services').addClass('active');
     });
 </script>
 {% endblock %}
