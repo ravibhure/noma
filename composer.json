@@ -21,9 +21,6 @@
         "jms/di-extra-bundle": "1.1.*",
         "twitter/bootstrap": "master",
         "jquery": "1.8.*",
-        "jquery-ui": "1.9.*",
-        "datatables": "1.9.*",
-        "select2": "3.*"
     },
     "scripts": {
         "post-install-cmd": [
