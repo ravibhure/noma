@@ -14,27 +14,18 @@
     <thead>
         <tr><th>Service</th><th>Nodes</th></tr>
     </thead>
-    <tbody>
-        {% if nodeprops %}
-        {% for nodeprop in nodeprops%}
-        <tr>
-            <td>{{ nodeprop.getContent() }}</td>
-            <td>
-                {% for n in nodeprop.getNodes() %}
-                {{ n.getName() }},
-                {% endfor %}
-            </td>
-            {% endfor %}
-        </tr>
-        {% else %}
-        <tr><td colspan="2">No services found</td></tr>
-        {% endif %}
+    <tbody id="servicelist_body">
     </tbody>
 </table>
-
 <script>
-    $(document).ready(function() {
-        $('#nav-services').addClass('active');
-    });
+$(document).ready(function() {
+    $('#nav-services').addClass('active');
+    var cfg = {
+        'base_url': '{{ path('noma_noma_homepage') }}'
+    };
+    noma.init(cfg);
+    noma.services.init();
+    noma.services.refresh();
+});
 </script>
 {% endblock %}
