@@ -1,29 +1,57 @@
+/**
+ * Noma
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GPLv3 license that is bundled
+ * with this package in the file doc/GPLv3.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ *
+ * @copyright  Copyright (c) 2012 Jochem Kossen <jochem@jkossen.nl>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.txt GPLv3
+ */
+
 var noma = noma || {};
 
 (function() {
     var _ns = noma;
+    var _cfg = {};
 
-    this.cfg = {};
     this.services = {};
     this.utilities = {};
 
     this.init = function(cfg) {
-        this.cfg = cfg;
+        this._cfg = cfg;
     }
 
+    /****** UTILITIES **********************************************************
+     * Collection of utility functions to make it easier to do certain things
+     */
+
+    /**
+     * Simple wrapper around jQuery's .ajax function
+     */
     this.utilities.api_get = function(api_call, data, fn_success) {
         $.ajax({
-            url: _ns.cfg['base_url'] + 'api/' + api_call + '/',
+            url: _ns._cfg['base_url'] + 'api/' + api_call + '/',
             type: 'GET',
             dataType: 'json',
             data: data,
             success: fn_success,
             error: function(jqXHR, textStatus, errorThrown) {
-                alert(errorThrown);
+                alert(errorThrown + ': ' + _cfg['base_url'] + 'api/' + api_call + '/');
             }
         });
     }
 
+    /****** SERVICES ***********************************************************
+     * Functions for the 'Services' screen
+     */
+
+    /**
+     * Show a list of nodes linked to the given nodeprop
+     */
     this.services.show_nodes = function(nodeprop_id) {
         var data =  {
             nodeprop: nodeprop_id
@@ -41,6 +69,9 @@ var noma = noma || {};
         });
     }
 
+    /**
+     * Refresh the servicelist
+     */
     this.services.refresh = function() {
         var data = {
             nodepropdefname: 'service'
@@ -59,6 +90,9 @@ var noma = noma || {};
         });
     }
 
+    /**
+     * Event handler for the servicelist: when the nr of nodes link is clicked, show the nodes
+     */
     this.services.init = function() {
         $('#servicelist_body').on('click', function(event) {
             if ($(event.target).is('a.service_link')) {
