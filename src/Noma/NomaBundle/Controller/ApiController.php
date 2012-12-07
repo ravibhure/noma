@@ -71,6 +71,66 @@ class ApiController extends Controller
         );
     }
 
+    protected function _getNodeProps($data)
+    {
+        $limit = 25;
+        $max_limit = 100;
+        $page = 1;
+
+        $nodes = $this->getDoctrine()
+            ->getRepository('NomaNomaBundle:NodeProp');
+
+        $q = $nodes->createQueryBuilder('p');
+        $q->leftJoin('p.nodepropdef', 'd');
+        $q->leftJoin('p.nodes', 'n');
+        $q->select(array('p', 'd', 'n'));
+        
+        if (isset($data['nodepropdef'])) {
+            $q->andWhere('d.id = :nodepropdef');
+            $q->setParameter('nodepropdef', $data['nodepropdef']);
+        }
+
+        if (isset($data['nodepropdefname'])) {
+            $q->andWhere('d.name = :nodepropdefname');
+            $q->setParameter('nodepropdefname', $data['nodepropdefname']);
+        }
+
+        if (isset($data['node'])) {
+            $q->andWhere('n.id = :node');
+            $q->setParameter('node', $data['node']);
+        }
+
+        $r = clone($q);
+        $query = $r->select('count(n.id)')->getQuery();
+        $total = $query->getSingleScalarResult();
+
+        $q->addOrderBy('p.content', 'ASC');
+
+        if (isset($data['page_limit'])) {
+            $limit = abs($data['page_limit']);
+
+            if ($limit > $max_limit) {
+                $limit = $max_limit;
+            }
+        }
+
+        if (isset($data['page'])) {
+            $page = abs($data['page']);
+        }
+
+        $q->setFirstResult(($page - 1) * $limit);
+        $q->setMaxResults($limit);
+
+        $query = $q->getQuery();
+
+        $array_result = $query->getArrayResult();
+
+        return array(
+            'nodeprops_total' => $total,
+            'nodeprops' => $array_result
+        );
+    }
+
     public function jsonGetNodesAction()
     {
         $request = $this->getRequest();
@@ -92,4 +152,31 @@ class ApiController extends Controller
         return new Response(json_encode($this->_getNodes($data)));
     }
 
+    /**
+     * Retrieve node properties
+     *
+     * @return Response
+     */
+    public function jsonGetNodePropsAction()
+    {
+        $request = $this->getRequest();
+
+        $form = $this->createFormBuilder()
+            ->add('page_limit', 'integer')
+            ->add('page', 'integer')
+            ->add('node', 'integer')
+            ->add('nodepropdef', 'integer')
+            ->add('nodepropdefname', 'text')
+            ->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->bind($_POST);
+        } elseif ($request->isMethod('GET')) {
+            $form->bind($request->query->all());
+        }
+
+        $data = $form->getData();
+
+        return new Response(json_encode($this->_getNodeProps($data)));
+    }
 }
