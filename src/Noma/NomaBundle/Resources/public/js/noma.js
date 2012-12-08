@@ -20,6 +20,10 @@ var NOMA = NOMA || {};
 (function(ns) {
     var _cfg = {};
 
+    var init = function(cfg) {
+        _cfg = cfg;
+    }
+
     var get = function(key) {
         return _cfg[key];
     }
@@ -28,13 +32,9 @@ var NOMA = NOMA || {};
         _cfg[key] = value;
     }
 
-    var init = function(cfg) {
-        _cfg = cfg;
-    }
-
+    ns.init = init;
     ns.get = get;
     ns.set = set;
-    ns.init = init;
 }(NOMA));
 
 ////////////////////////////////////////////////////////////////////////////
