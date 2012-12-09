@@ -35,11 +35,25 @@ class ApiController extends Controller
 
         $q->where('1 = 1');
 
+        // get nodes which have this nodeprop
         if (isset($data['nodeprop'])) {
             $q->andWhere('p.id = :nodeprop');
             $q->setParameter('nodeprop', $data['nodeprop']);
         }
 
+        // exclude nodes having this nodeprop
+        if (isset($data['exclude_nodeprop'])) {
+            $q2 = $nodes->createQueryBuilder('n2');
+            $q2->select(array('n2.id'));
+            $q2->leftJoin('n2.nodeprops', 'p2');
+            $q2->where('p2.id = :exclude_nodeprop');
+            $q2->getDQL();
+           
+            $q->andWhere($q->expr()->notIn('n.id', $q2->getDQL()));
+            $q->setParameter('exclude_nodeprop', $data['exclude_nodeprop']);
+        }
+
+        // clone querybuilder to count the nr of total rows
         $r = clone($q);
         $query = $r->select('count(n.id)')->getQuery();
         $total = $query->getSingleScalarResult();
@@ -139,6 +153,7 @@ class ApiController extends Controller
             ->add('page_limit', 'integer')
             ->add('page', 'integer')
             ->add('nodeprop', 'integer')
+            ->add('exclude_nodeprop', 'integer')
             ->getForm();
 
         if ($request->isMethod('POST')) {
