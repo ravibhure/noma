@@ -35,6 +35,7 @@ var NOMA = NOMA || {};
     ns.init = init;
     ns.get = get;
     ns.set = set;
+
 }(NOMA));
 
 ////////////////////////////////////////////////////////////////////////////
@@ -69,21 +70,42 @@ NOMA.utilities = NOMA.utilities || {};
 NOMA.services = NOMA.services || {};
 (function(ns) {
     // Show a list of nodes linked to the given nodeprop
-    var show_nodes = function(nodeprop_id) {
+    var show_nodes = function(nodeprop_id, el_target) {
+        var selected_nodes = [];
         var data =  {
             nodeprop: nodeprop_id
         };
 
+        $(el_target).empty();
+        $(el_target).toggle();
+
+        $(el_target).append(
+            '<select class="nodeprop_nodes" id="nodeprop_nodeslist_available_' + nodeprop_id + '" size="10"></select> <->'
+        );
+        $(el_target).append(
+            '<select class="nodeprop_nodes" id="nodeprop_nodeslist_' + nodeprop_id + '" size="10"></select>'
+        );
+
         ns.utilities.api_get('json_get_nodes', data, function(response, textStatus, jqXHR) {
-            $('#nodeprop_nodes_' + nodeprop_id).append(
-                '<ul class="nodeprop_nodes" id="nodeprop_nodeslist_' + nodeprop_id + '">'
-            );
             $.each(response.nodes, function(index, value) {
                 $('#nodeprop_nodeslist_' + nodeprop_id).append(
-                    '<li>' + value.name + '</li>'
+                    '<option value="' + value.id + '">' + value.name + '</option>'
                 );
             });
         });
+
+        var data2 =  {
+            exclude_nodeprop: nodeprop_id
+        };
+
+        ns.utilities.api_get('json_get_nodes', data2, function(response, textStatus, jqXHR) {
+            $.each(response.nodes, function(index, value) {
+                $('#nodeprop_nodeslist_available_' + nodeprop_id).append(
+                    '<option value="' + value.id + '">' + value.name + '</option>'
+                );
+            });
+        });
+
     }
 
     // Refresh the servicelist
@@ -96,9 +118,12 @@ NOMA.services = NOMA.services || {};
             $.each(response.nodeprops, function(index, value) {
                 $('#servicelist_body').append(
                     '<tr>'
-                    + '<td>' + value['content'] + '</td>'
+                    + '<td style="width:200px;">' + value['content'] + '</td>'
                     + '<td class="nodeprop_nodecount" id="nodeprop_nodes_' + value.id + '">'
-                    + '<a href="#" class="service_link" id="#service_link_' + value['id'] + '">' + value.nodes.length + '</a></td>'
+                    + '<a href="#" class="service_link" id="#service_link_' + value['id'] + '">'
+                    + value.nodes.length + '</a>'
+                    + '<div id="nodeslist_' + value.id + '" class="nodeslist" style="display:none;width:250;height:200;"></div>'
+                    + '</td>'
                     + '</tr>'
                 );
             });
@@ -111,7 +136,7 @@ NOMA.services = NOMA.services || {};
         $('#servicelist_body').on('click', function(event) {
             if ($(event.target).is('a.service_link')) {
                 var id = event.target.id.replace('#service_link_', '');
-                ns.services.show_nodes(id);
+                ns.services.show_nodes(id, '#nodeslist_' + id);
             }
         });
     }
@@ -119,4 +144,5 @@ NOMA.services = NOMA.services || {};
     ns.services.init = init;
     ns.services.refresh = refresh;
     ns.services.show_nodes = show_nodes;
+
 }(NOMA));
