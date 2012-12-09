@@ -194,4 +194,82 @@ class ApiController extends Controller
 
         return new Response(json_encode($this->_getNodeProps($data)));
     }
+
+    public function jsonNodeAddNodepropAction()
+    {
+        $request = $this->getRequest();
+
+        $form = $this->createFormBuilder()
+            ->add('nodeprop', 'integer')
+            ->add('node', 'integer')
+            ->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->bind($_POST);
+        } elseif ($request->isMethod('GET')) {
+            $form->bind($request->query->all());
+        }
+
+        $data = $form->getData();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $node = $em->getRepository('NomaNomaBundle:Node')
+            ->find($data['node']);
+   
+        if (!$node) {
+            throw $this->createNotFoundException('No such node');
+        }
+
+        $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
+            ->find($data['nodeprop']);
+   
+        if (!$nodeprop) {
+            throw $this->createNotFoundException('No such nodeprop');
+        }
+
+        $nodeprop->addNode($node);
+        $em->flush();
+
+        return new Response(json_encode(array('result' => 'OK')));
+    } 
+
+    public function jsonNodeRemoveNodepropAction()
+    {
+        $request = $this->getRequest();
+
+        $form = $this->createFormBuilder()
+            ->add('nodeprop', 'integer')
+            ->add('node', 'integer')
+            ->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->bind($_POST);
+        } elseif ($request->isMethod('GET')) {
+            $form->bind($request->query->all());
+        }
+
+        $data = $form->getData();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $node = $em->getRepository('NomaNomaBundle:Node')
+            ->find($data['node']);
+   
+        if (!$node) {
+            throw $this->createNotFoundException('No such node');
+        }
+
+        $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
+            ->find($data['nodeprop']);
+   
+        if (!$nodeprop) {
+            throw $this->createNotFoundException('No such nodeprop');
+        }
+
+        $nodeprop->removeNode($node);
+        $em->flush();
+
+        return new Response(json_encode(array('result' => 'OK')));
+    } 
 }

@@ -14,3 +14,11 @@ noma_noma_api_json_nodeprops:
     pattern: /api/json_get_nodeprops/
     defaults: { _controller: NomaNomaBundle:Api:jsonGetNodeProps }
 
+noma_noma_api_json_node_add_nodeprop:
+    pattern: /api/json_node_add_nodeprop/
+    defaults: { _controller: NomaNomaBundle:Api:jsonNodeAddNodeprop}
+
+noma_noma_api_json_node_remove_nodeprop:
+    pattern: /api/json_node_remove_nodeprop/
+    defaults: { _controller: NomaNomaBundle:Api:jsonNodeRemoveNodeprop}
+
