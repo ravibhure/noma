@@ -212,20 +212,26 @@ class ApiController extends Controller
 
         $data = $form->getData();
 
+        foreach (array_keys($data) as $key) {
+            if (empty($data[$key])) {
+                return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'missing required argument: ' . $key)));
+            }
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $node = $em->getRepository('NomaNomaBundle:Node')
             ->find($data['node']);
    
         if (!$node) {
-            throw $this->createNotFoundException('No such node');
+            return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such node')));
         }
 
         $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
             ->find($data['nodeprop']);
    
         if (!$nodeprop) {
-            throw $this->createNotFoundException('No such nodeprop');
+            return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such nodeprop')));
         }
 
         $nodeprop->addNode($node);
@@ -251,20 +257,26 @@ class ApiController extends Controller
 
         $data = $form->getData();
 
+        foreach (array_keys($data) as $key) {
+            if (empty($data[$key])) {
+                return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'missing required argument: ' . $key)));
+            }
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $node = $em->getRepository('NomaNomaBundle:Node')
             ->find($data['node']);
    
         if (!$node) {
-            throw $this->createNotFoundException('No such node');
+            return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such node')));
         }
 
         $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
             ->find($data['nodeprop']);
    
         if (!$nodeprop) {
-            throw $this->createNotFoundException('No such nodeprop');
+            return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such nodeprop')));
         }
 
         $nodeprop->removeNode($node);
