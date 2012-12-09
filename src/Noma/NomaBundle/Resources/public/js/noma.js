@@ -153,9 +153,10 @@ NOMA.services = NOMA.services || {};
 
     // Show a list of nodes linked to the given nodeprop
     var show_nodes = function(nodeprop_id, el_target) {
-        var selected_nodes = [];
         $(el_target).toggle();
-        refresh_nodes(nodeprop_id, el_target);
+        if ($(el_target).css('display') != 'none') {
+            refresh_nodes(nodeprop_id, el_target);
+        }
     }
 
     // Refresh the servicelist
