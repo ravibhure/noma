@@ -101,9 +101,9 @@ NOMA.services = NOMA.services || {};
         $(el_target).append(
             '<div class="pull-left"><strong>selected nodes:</strong><br>'
             + '<select class="nodeprop_nodes" id="nodeprop_nodeslist_' + nodeprop_id + '" size="10"></select></div>'
-            + '<div class="btn-group btn-group-vertical pull-left" style="margin-top:75px;padding: 10px;">'
-            + '<button class="btn btn-success" id="select_node_' + nodeprop_id + '"><i class="icon-hand-left"></i></button>'
-            + '<button class="btn btn-danger" id="deselect_node_' + nodeprop_id + '"><i class="icon-hand-right"></i></button>'
+            + '<div class="btn-group pull-left" style="margin-top:75px;padding: 10px;">'
+            + '<button class="btn" id="select_node_' + nodeprop_id + '"><i class="icon-chevron-left"></i></button>'
+            + '<button class="btn" id="deselect_node_' + nodeprop_id + '"><i class="icon-chevron-right"></i></button>'
             + '</div>'
             + '<div class="pull-left"><strong>available nodes:</strong><br>'
             + '<select class="nodeprop_nodes" id="nodeprop_nodeslist_available_' + nodeprop_id + '" size="10"></select>'
