@@ -54,7 +54,7 @@ NOMA.utilities = NOMA.utilities || {};
             data: data,
             success: fn_success,
             error: function(jqXHR, textStatus, errorThrown) {
-                alert(errorThrown + ': ' + NOMA.get('base_url') + 'api/' + api_call + '/');
+                alert(errorThrown + ': ' + ns.get('base_url') + 'api/' + api_call + '/');
             }
         });
     }
