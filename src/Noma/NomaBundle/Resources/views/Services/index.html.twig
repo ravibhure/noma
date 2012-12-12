@@ -1,7 +1,6 @@
 {% extends 'NomaNomaBundle::base.html.twig' %}
 
 {% block content %}
-<h1>Services</h1>
 <form method="post" class="form-inline">
     <fieldset>
         {{ form_widget(form.content, { 'attr': {'placeholder': 'Service'} }) }}
@@ -18,14 +17,14 @@
     </tbody>
 </table>
 <script>
-$(document).ready(function() {
-    $('#nav-services').addClass('active');
-    var cfg = {
-        'base_url': '{{ path('noma_noma_homepage') }}'
-    };
-    NOMA.init(cfg);
-    NOMA.services.init();
-    NOMA.services.refresh();
-});
+    $(document).ready(function() {
+        $('#nav-services').addClass('active');
+        var cfg = {
+            'base_url': '{{ path('noma_noma_homepage') }}'
+        };
+        NOMA.init(cfg);
+        NOMA.services.init();
+        NOMA.services.refresh();
+    });
 </script>
 {% endblock %}
