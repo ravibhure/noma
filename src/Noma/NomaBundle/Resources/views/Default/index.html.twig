@@ -1,14 +1,31 @@
 {% extends 'NomaNomaBundle::base.html.twig' %}
 
 {% block content %}
-<ul>
-{% for node in nodes %}
-<li>{{ node.getName() }}</li>
-    {% for prop in node.getNodeProps() %}
-        {{ prop.getNodePropDef().getName() }}: {{ prop.getContent() }}
-    {% endfor %}
-{% endfor %}
-</ul>
+<form method="post" class="form-inline">
+    <fieldset>
+        {{ form_widget(form.name, { 'attr': {'placeholder': 'hostname'} }) }}
+        {{ form_widget(form.ip, { 'attr': {'placeholder': 'ip address'} }) }}
+        <input type="submit" value="Save" class="btn">
+        {{ form_rest(form) }}
+    </fieldset>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr><th>node</th><th>properties</th></tr>
+    </thead>
+    <tbody>
+        {% for node in nodes %}
+        <tr><td>{{ node.getName() }}</td>
+            <td>
+                {% for prop in node.getNodeProps() %}
+                {{ prop.getNodePropDef().getName() }}: {{ prop.getContent() }},
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 <script>
     $(document).ready(function() {
         $('#nav-nodes').addClass('active');

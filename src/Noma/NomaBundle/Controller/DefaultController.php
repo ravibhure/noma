@@ -18,6 +18,8 @@ namespace Noma\NomaBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
+use Noma\NomaBundle\Entity\Node;
+
 class DefaultController extends Controller
 {
     public function indexAction()
@@ -30,6 +32,13 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('No nodes found.');
         }
 
-        return $this->render('NomaNomaBundle:Default:index.html.twig', array('nodes' => $nodes));
+        $node = new Node();
+        $form = $this->createFormBuilder($node)
+            ->add('name', 'text', array('label' => 'hostname'))
+            ->add('ip', 'text', array('label' => 'ip address'))
+            ->getForm();
+
+        return $this->render('NomaNomaBundle:Default:index.html.twig',
+            array('nodes' => $nodes, 'form' => $form->createView()));
     }
 }
