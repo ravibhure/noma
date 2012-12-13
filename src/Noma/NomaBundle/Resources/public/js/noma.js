@@ -79,7 +79,7 @@ NOMA.html = NOMA.html || {};
             '</div>';
 
         return str_html;
-    }
+    };
 
     ns.html.multi_select = multi_select;
 }(NOMA));
