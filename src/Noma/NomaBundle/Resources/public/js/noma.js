@@ -22,15 +22,15 @@ var NOMA = NOMA || {};
 
     var init = function(cfg) {
         _cfg = cfg;
-    }
+    };
 
     var get = function(key) {
         return _cfg[key];
-    }
+    };
 
     var set = function(key, value) {
         _cfg[key] = value;
-    }
+    };
 
     ns.init = init;
     ns.get = get;
@@ -44,7 +44,6 @@ var NOMA = NOMA || {};
 ////////////////////////////////////////////////////////////////////////////
 NOMA.utilities = NOMA.utilities || {};
 (function(ns) {
-
     // Simple wrapper around jQuery's .ajax function
     var api_get = function(api_call, data, fn_success) {
         $.ajax({
@@ -57,10 +56,32 @@ NOMA.utilities = NOMA.utilities || {};
                 alert(errorThrown + ': ' + ns.get('base_url') + 'api/' + api_call + '/');
             }
         });
-    }
+    };
 
     ns.utilities.api_get = api_get;
 
+}(NOMA));
+
+////////////////////////////////////////////////////////////////////////////
+// HTML
+// Collection of HTML templates / widgets
+////////////////////////////////////////////////////////////////////////////
+NOMA.html = NOMA.html || {};
+(function(ns) {
+    var multi_select = function(id, title_left, title_right) {
+        var str_html = '<div class="pull-left"><strong>' + title_left + ':</strong><br>' +
+            '<select class="noma_multiselect" id="' + id + '_left" size="10"></select></div>' +
+            '<div class="btn-group pull-left" style="margin-top:75px;padding: 10px;">' +
+            '<button class="btn" id="' + id + '_btn_select"><i class="icon-chevron-left"></i></button>' +
+            '<button class="btn" id="' + id + '_btn_deselect"><i class="icon-chevron-right"></i></button>' +
+            '</div><div class="pull-left"><strong>' + title_right + ':</strong><br>' +
+            '<select class="noma_multiselect" id="' + id + '_right" size="10"></select>' +
+            '</div>';
+
+        return str_html;
+    }
+
+    ns.html.multi_select = multi_select;
 }(NOMA));
 
 ////////////////////////////////////////////////////////////////////////////
@@ -76,11 +97,10 @@ NOMA.services = NOMA.services || {};
         };
 
         ns.utilities.api_get('json_node_add_nodeprop', data, function(response, textStatus, jqXHR) {
-            $('#nodeprop_nodeslist_' + nodeprop_id).append(
-                $('#nodeprop_nodeslist_available_' + nodeprop_id + ' option:selected')
-            );
+            $('#select_node_' + nodeprop_id + '_left').append(
+                $('#select_node_' + nodeprop_id + '_right option:selected'));
         });
-    }
+    };
 
     var remove_node = function(nodeprop_id, node_id) {
         var data = {
@@ -89,40 +109,31 @@ NOMA.services = NOMA.services || {};
         };
 
         ns.utilities.api_get('json_node_remove_nodeprop', data, function(response, textStatus, jqXHR) {
-            $('#nodeprop_nodeslist_available_' + nodeprop_id).append(
-                $('#nodeprop_nodeslist_' + nodeprop_id + ' option:selected')
-            );
+            $('#select_node_' + nodeprop_id + '_right').append(
+                $('#select_node_' + nodeprop_id + '_left option:selected'));
         });
-    }
+    };
 
     var refresh_nodes = function(nodeprop_id, el_target) {
         $(el_target).empty();
 
-        $(el_target).append(
-            '<div class="pull-left"><strong>selected nodes:</strong><br>'
-            + '<select class="nodeprop_nodes" id="nodeprop_nodeslist_' + nodeprop_id + '" size="10"></select></div>'
-            + '<div class="btn-group pull-left" style="margin-top:75px;padding: 10px;">'
-            + '<button class="btn" id="select_node_' + nodeprop_id + '"><i class="icon-chevron-left"></i></button>'
-            + '<button class="btn" id="deselect_node_' + nodeprop_id + '"><i class="icon-chevron-right"></i></button>'
-            + '</div>'
-            + '<div class="pull-left"><strong>available nodes:</strong><br>'
-            + '<select class="nodeprop_nodes" id="nodeprop_nodeslist_available_' + nodeprop_id + '" size="10"></select>'
-            + '</div>'
-        );
+        var multiselect = ns.html.multi_select('select_node_' + nodeprop_id, 'selected nodes', 'deselected nodes');
 
-        // event handler: add selected node to service
-        $('#select_node_' + nodeprop_id).click(function() {
-            var node_id = $('#nodeprop_nodeslist_available_' + nodeprop_id + ' option:selected').val();
+        $(el_target).append(multiselect);
+
+        // event handler: remove selected node from service
+        $('#select_node_' + nodeprop_id + '_btn_deselect').click(function() {
+            var node_id = $('#select_node_' + nodeprop_id + '_left option:selected').val();
             if (node_id != undefined) {
-                add_node(nodeprop_id, node_id);
+                remove_node(nodeprop_id, node_id);
             }
         });
 
-        // event handler: remove selected node from service
-        $('#deselect_node_' + nodeprop_id).click(function() {
-            var node_id = $('#nodeprop_nodeslist_' + nodeprop_id + ' option:selected').val();
+        // event handler: add selected node to service
+        $('#select_node_' + nodeprop_id + '_btn_select').click(function() {
+            var node_id = $('#select_node_' + nodeprop_id + '_right option:selected').val();
             if (node_id != undefined) {
-                remove_node(nodeprop_id, node_id);
+                add_node(nodeprop_id, node_id);
             }
         });
 
@@ -132,9 +143,8 @@ NOMA.services = NOMA.services || {};
 
         ns.utilities.api_get('json_get_nodes', data, function(response, textStatus, jqXHR) {
             $.each(response.nodes, function(index, value) {
-                $('#nodeprop_nodeslist_' + nodeprop_id).append(
-                    '<option value="' + value.id + '">' + value.name + '</option>'
-                );
+                $('#select_node_' + nodeprop_id + '_left').append(
+                    '<option value="' + value.id + '">' + value.name + '</option>');
             });
         });
 
@@ -144,12 +154,11 @@ NOMA.services = NOMA.services || {};
 
         ns.utilities.api_get('json_get_nodes', data2, function(response, textStatus, jqXHR) {
             $.each(response.nodes, function(index, value) {
-                $('#nodeprop_nodeslist_available_' + nodeprop_id).append(
-                    '<option value="' + value.id + '">' + value.name + '</option>'
-                );
+                $('#select_node_' + nodeprop_id + '_right').append(
+                    '<option value="' + value.id + '">' + value.name + '</option>');
             });
         });
-    }
+    };
 
     // Show a list of nodes linked to the given nodeprop
     var show_nodes = function(nodeprop_id, el_target) {
@@ -157,7 +166,7 @@ NOMA.services = NOMA.services || {};
         if ($(el_target).css('display') != 'none') {
             refresh_nodes(nodeprop_id, el_target);
         }
-    }
+    };
 
     // Refresh the servicelist
     var refresh = function() {
@@ -168,18 +177,16 @@ NOMA.services = NOMA.services || {};
         ns.utilities.api_get('json_get_nodeprops', data, function(response, textStatus, jqXHR) {
             $.each(response.nodeprops, function(index, value) {
                 $('#servicelist_body').append(
-                    '<tr>'
-                    + '<td style="width:200px;">' + value['content'] + '</td>'
-                    + '<td class="nodeprop_nodecount" id="nodeprop_nodes_' + value.id + '">'
-                    + '<a href="#" class="service_link" id="#service_link_' + value['id'] + '">'
-                    + value.nodes.length + '</a>'
-                    + '<div id="nodeslist_' + value.id + '" class="nodeslist" style="display:none;width:250;height:200;"></div>'
-                    + '</td>'
-                    + '</tr>'
-                );
+                    '<tr>' +
+                    '<td style="width:200px;">' + value['content'] + '</td>' +
+                    '<td class="nodeprop_nodecount" id="nodeprop_nodes_' + value.id + '">' +
+                    '<a href="#" class="service_link" id="#service_link_' + value['id'] + '">' +
+                    value.nodes.length + '</a>' +
+                    '<div id="nodeslist_' + value.id + '" class="nodeslist" style="display:none;width:250;height:200;"></div>' +
+                    '</td></tr>');
             });
         });
-    }
+    };
 
     // Event handler for the servicelist: when the nr of nodes link is clicked, show the nodes
     var init = function() {
@@ -189,7 +196,7 @@ NOMA.services = NOMA.services || {};
                 ns.services.show_nodes(id, '#nodeslist_' + id);
             }
         });
-    }
+    };
 
     ns.services.init = init;
     ns.services.refresh = refresh;
