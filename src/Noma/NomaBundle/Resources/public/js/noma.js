@@ -68,14 +68,14 @@ NOMA.utilities = NOMA.utilities || {};
 ////////////////////////////////////////////////////////////////////////////
 NOMA.html = NOMA.html || {};
 (function(ns) {
-    var multi_select = function(id, title_left, title_right) {
-        var str_html = '<div class="pull-left"><strong>' + title_left + ':</strong><br>' +
-            '<select class="noma_multiselect" id="' + id + '_left" size="10"></select></div>' +
+    var multi_select = function(id, title_selected, title_deselected) {
+        var str_html = '<div class="pull-left"><strong>' + title_selected + ':</strong><br>' +
+            '<select class="noma_multiselect" id="' + id + '_selected" size="10"></select></div>' +
             '<div class="btn-group pull-left" style="margin-top:75px;padding: 10px;">' +
             '<button class="btn" id="' + id + '_btn_select"><i class="icon-chevron-left"></i></button>' +
             '<button class="btn" id="' + id + '_btn_deselect"><i class="icon-chevron-right"></i></button>' +
-            '</div><div class="pull-left"><strong>' + title_right + ':</strong><br>' +
-            '<select class="noma_multiselect" id="' + id + '_right" size="10"></select>' +
+            '</div><div class="pull-left"><strong>' + title_deselected + ':</strong><br>' +
+            '<select class="noma_multiselect" id="' + id + '_deselected" size="10"></select>' +
             '</div>';
 
         return str_html;
@@ -97,8 +97,8 @@ NOMA.services = NOMA.services || {};
         };
 
         ns.utilities.api_get('json_node_add_nodeprop', data, function(response, textStatus, jqXHR) {
-            $('#select_node_' + nodeprop_id + '_left').append(
-                $('#select_node_' + nodeprop_id + '_right option:selected'));
+            $('#select_node_' + nodeprop_id + '_selected').append(
+                $('#select_node_' + nodeprop_id + '_deselected option:selected'));
         });
     };
 
@@ -109,21 +109,21 @@ NOMA.services = NOMA.services || {};
         };
 
         ns.utilities.api_get('json_node_remove_nodeprop', data, function(response, textStatus, jqXHR) {
-            $('#select_node_' + nodeprop_id + '_right').append(
-                $('#select_node_' + nodeprop_id + '_left option:selected'));
+            $('#select_node_' + nodeprop_id + '_deselected').append(
+                $('#select_node_' + nodeprop_id + '_selected option:selected'));
         });
     };
 
     var refresh_nodes = function(nodeprop_id, el_target) {
         $(el_target).empty();
 
-        var multiselect = ns.html.multi_select('select_node_' + nodeprop_id, 'selected nodes', 'deselected nodes');
+        var multiselect = ns.html.multi_select('select_node_' + nodeprop_id, '_selected nodes', 'deselected nodes');
 
         $(el_target).append(multiselect);
 
         // event handler: remove selected node from service
         $('#select_node_' + nodeprop_id + '_btn_deselect').click(function() {
-            var node_id = $('#select_node_' + nodeprop_id + '_left option:selected').val();
+            var node_id = $('#select_node_' + nodeprop_id + '_selected option:selected').val();
             if (node_id != undefined) {
                 remove_node(nodeprop_id, node_id);
             }
@@ -131,7 +131,7 @@ NOMA.services = NOMA.services || {};
 
         // event handler: add selected node to service
         $('#select_node_' + nodeprop_id + '_btn_select').click(function() {
-            var node_id = $('#select_node_' + nodeprop_id + '_right option:selected').val();
+            var node_id = $('#select_node_' + nodeprop_id + '_deselected option:selected').val();
             if (node_id != undefined) {
                 add_node(nodeprop_id, node_id);
             }
@@ -143,7 +143,7 @@ NOMA.services = NOMA.services || {};
 
         ns.utilities.api_get('json_get_nodes', data, function(response, textStatus, jqXHR) {
             $.each(response.nodes, function(index, value) {
-                $('#select_node_' + nodeprop_id + '_left').append(
+                $('#select_node_' + nodeprop_id + '_selected').append(
                     '<option value="' + value.id + '">' + value.name + '</option>');
             });
         });
@@ -154,7 +154,7 @@ NOMA.services = NOMA.services || {};
 
         ns.utilities.api_get('json_get_nodes', data2, function(response, textStatus, jqXHR) {
             $.each(response.nodes, function(index, value) {
-                $('#select_node_' + nodeprop_id + '_right').append(
+                $('#select_node_' + nodeprop_id + '_deselected').append(
                     '<option value="' + value.id + '">' + value.name + '</option>');
             });
         });
