@@ -20,18 +20,112 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApiController extends Controller
 {
-    protected function _getNodes($data)
+    /**
+     * Get the GET or POST data
+     *
+     * Determine if it's a POST or GET request, then parse and return data
+     *
+     * @param Request $request
+     *
+     * @return Array request data
+     */
+    protected function _getRequestData($form_fields)
+    {
+        $request = $this->getRequest();
+
+        $fb = $this->createFormBuilder();
+        foreach ($form_fields as $field) {
+            $fb->add($field[0], $field[1]);
+        }
+
+        $form = $fb->getForm();
+
+        if ($request->isMethod('POST')) {
+            $request_data = $request;
+        } else {
+            $request_data = $request->query->all();
+        }
+
+        $form->bind($request_data);
+
+        return $form->getData();
+    }
+
+    /**
+     * Create QueryBuilder with some standard options
+     *
+     * This function creates a new QueryBuilder based on the given entity and
+     * data array
+     *
+     * @param String $entity main entity to initialize QueryBuilder
+     * @param Array $data array with desired page nr and items per page limit
+     *
+     * @return Array querybuilder, first_result and limit
+     */
+    protected function _getStdQueryBuilder($entity, $data)
     {
         $limit = 25;
         $max_limit = 100;
         $page = 1;
 
-        $nodes = $this->getDoctrine()
-            ->getRepository('NomaNomaBundle:Node');
+        $ci = $this->getDoctrine()
+            ->getRepository('NomaNomaBundle:' . $entity);
 
-        $q = $nodes->createQueryBuilder('n');
-        $q->leftJoin('n.nodeprops', 'p');
-        $q->select(array('n', 'p'));
+        $q = $ci->createQueryBuilder('e');
+
+        $q->where('1 = 1');
+
+        if (isset($data['page_limit'])) {
+            $limit = intval(abs($data['page_limit']));
+
+            if ($limit > $max_limit) {
+                $limit = $max_limit;
+            }
+
+            if ($limit < 1) {
+                $limit = 1;
+            }
+        }
+
+        if (isset($data['page'])) {
+            $page = intval(abs($data['page']));
+        }
+
+        if ($page < 1) {
+            $page = 1;
+        }
+
+        $first_result = ($page - 1) * $limit;
+
+        return (array(
+            'q' => $q,
+            'first_result' => $first_result,
+            'limit' => $limit
+        ));
+    }
+
+    /**
+     * Count the number of records based on the given QueryBuilder
+     *
+     * @param QueryBuilder $q
+     *
+     * @return integer number of records
+     */
+    protected function _getResultCount($q)
+    {
+        $r = clone($q);
+        $query = $r->select('count(e.id)')->getQuery();
+        return $query->getSingleScalarResult();
+    }
+
+    protected function _getNodes($data)
+    {
+        $qb = $this->_getStdQueryBuilder('Node', $data);
+
+        $q = $qb['q'];
+
+        $q->leftJoin('e.nodeprops', 'p');
+        $q->select(array('e', 'p'));
 
         $q->where('1 = 1');
 
@@ -43,37 +137,23 @@ class ApiController extends Controller
 
         // exclude nodes having this nodeprop
         if (isset($data['exclude_nodeprop'])) {
-            $q2 = $nodes->createQueryBuilder('n2');
+            $ci = $this->getDoctrine()->getRepository('NomaNomaBundle:Node');
+            $q2 = $ci->createQueryBuilder('n2');
             $q2->select(array('n2.id'));
             $q2->leftJoin('n2.nodeprops', 'p2');
             $q2->where('p2.id = :exclude_nodeprop');
             $q2->getDQL();
-           
-            $q->andWhere($q->expr()->notIn('n.id', $q2->getDQL()));
+
+            $q->andWhere($q->expr()->notIn('e.id', $q2->getDQL()));
             $q->setParameter('exclude_nodeprop', $data['exclude_nodeprop']);
         }
 
-        // clone querybuilder to count the nr of total rows
-        $r = clone($q);
-        $query = $r->select('count(n.id)')->getQuery();
-        $total = $query->getSingleScalarResult();
+        $total = $this->_getResultCount($q);
 
-        $q->addOrderBy('n.name', 'ASC');
+        $q->addOrderBy('e.name', 'ASC');
 
-        if (isset($data['page_limit'])) {
-            $limit = abs($data['page_limit']);
-
-            if ($limit > $max_limit) {
-                $limit = $max_limit;
-            }
-        }
-
-        if (isset($data['page'])) {
-            $page = abs($data['page']);
-        }
-
-        $q->setFirstResult(($page - 1) * $limit);
-        $q->setMaxResults($limit);
+        $q->setFirstResult($qb['first_result']);
+        $q->setMaxResults($qb['limit']);
 
         $query = $q->getQuery();
 
@@ -87,18 +167,14 @@ class ApiController extends Controller
 
     protected function _getNodeProps($data)
     {
-        $limit = 25;
-        $max_limit = 100;
-        $page = 1;
+        $qb = $this->_getStdQueryBuilder('NodeProp', $data);
 
-        $nodes = $this->getDoctrine()
-            ->getRepository('NomaNomaBundle:NodeProp');
+        $q = $qb['q'];
 
-        $q = $nodes->createQueryBuilder('p');
-        $q->leftJoin('p.nodepropdef', 'd');
-        $q->leftJoin('p.nodes', 'n');
-        $q->select(array('p', 'd', 'n'));
-        
+        $q->leftJoin('e.nodepropdef', 'd');
+        $q->leftJoin('e.nodes', 'n');
+        $q->select(array('e', 'd', 'n'));
+
         if (isset($data['nodepropdef'])) {
             $q->andWhere('d.id = :nodepropdef');
             $q->setParameter('nodepropdef', $data['nodepropdef']);
@@ -114,26 +190,12 @@ class ApiController extends Controller
             $q->setParameter('node', $data['node']);
         }
 
-        $r = clone($q);
-        $query = $r->select('count(n.id)')->getQuery();
-        $total = $query->getSingleScalarResult();
+        $total = $this->_getResultCount($q);
 
-        $q->addOrderBy('p.content', 'ASC');
+        $q->addOrderBy('e.content', 'ASC');
 
-        if (isset($data['page_limit'])) {
-            $limit = abs($data['page_limit']);
-
-            if ($limit > $max_limit) {
-                $limit = $max_limit;
-            }
-        }
-
-        if (isset($data['page'])) {
-            $page = abs($data['page']);
-        }
-
-        $q->setFirstResult(($page - 1) * $limit);
-        $q->setMaxResults($limit);
+        $q->setFirstResult($qb['first_result']);
+        $q->setMaxResults($qb['limit']);
 
         $query = $q->getQuery();
 
@@ -147,22 +209,12 @@ class ApiController extends Controller
 
     public function jsonGetNodesAction()
     {
-        $request = $this->getRequest();
-
-        $form = $this->createFormBuilder()
-            ->add('page_limit', 'integer')
-            ->add('page', 'integer')
-            ->add('nodeprop', 'integer')
-            ->add('exclude_nodeprop', 'integer')
-            ->getForm();
-
-        if ($request->isMethod('POST')) {
-            $form->bind($_POST);
-        } elseif ($request->isMethod('GET')) {
-            $form->bind($request->query->all());
-        }
-
-        $data = $form->getData();
+        $data = $this->_getRequestData(Array(
+            Array('page_limit', 'integer'),
+            Array('page', 'integer'),
+            Array('nodeprop', 'integer'),
+            Array('exclude_nodeprop', 'integer')
+        ));
 
         return new Response(json_encode($this->_getNodes($data)));
     }
@@ -174,43 +226,23 @@ class ApiController extends Controller
      */
     public function jsonGetNodePropsAction()
     {
-        $request = $this->getRequest();
-
-        $form = $this->createFormBuilder()
-            ->add('page_limit', 'integer')
-            ->add('page', 'integer')
-            ->add('node', 'integer')
-            ->add('nodepropdef', 'integer')
-            ->add('nodepropdefname', 'text')
-            ->getForm();
-
-        if ($request->isMethod('POST')) {
-            $form->bind($_POST);
-        } elseif ($request->isMethod('GET')) {
-            $form->bind($request->query->all());
-        }
-
-        $data = $form->getData();
+        $data = $this->_getRequestData(Array(
+            Array('page_limit', 'integer'),
+            Array('page', 'integer'),
+            Array('node', 'integer'),
+            Array('nodepropdef', 'integer'),
+            Array('nodepropdefname', 'text')
+        ));
 
         return new Response(json_encode($this->_getNodeProps($data)));
     }
 
     public function jsonNodeAddNodepropAction()
     {
-        $request = $this->getRequest();
-
-        $form = $this->createFormBuilder()
-            ->add('nodeprop', 'integer')
-            ->add('node', 'integer')
-            ->getForm();
-
-        if ($request->isMethod('POST')) {
-            $form->bind($_POST);
-        } elseif ($request->isMethod('GET')) {
-            $form->bind($request->query->all());
-        }
-
-        $data = $form->getData();
+        $data = $this->_getRequestData(Array(
+            Array('nodeprop', 'integer'),
+            Array('node', 'integer')
+        ));
 
         foreach (array_keys($data) as $key) {
             if (empty($data[$key])) {
@@ -222,14 +254,14 @@ class ApiController extends Controller
 
         $node = $em->getRepository('NomaNomaBundle:Node')
             ->find($data['node']);
-   
+
         if (!$node) {
             return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such node')));
         }
 
         $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
             ->find($data['nodeprop']);
-   
+
         if (!$nodeprop) {
             return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such nodeprop')));
         }
@@ -238,24 +270,14 @@ class ApiController extends Controller
         $em->flush();
 
         return new Response(json_encode(array('result' => 'OK')));
-    } 
+    }
 
     public function jsonNodeRemoveNodepropAction()
     {
-        $request = $this->getRequest();
-
-        $form = $this->createFormBuilder()
-            ->add('nodeprop', 'integer')
-            ->add('node', 'integer')
-            ->getForm();
-
-        if ($request->isMethod('POST')) {
-            $form->bind($_POST);
-        } elseif ($request->isMethod('GET')) {
-            $form->bind($request->query->all());
-        }
-
-        $data = $form->getData();
+        $data = $this->_getRequestData(Array(
+            Array('nodeprop', 'integer'),
+            Array('node', 'integer')
+        ));
 
         foreach (array_keys($data) as $key) {
             if (empty($data[$key])) {
@@ -267,14 +289,14 @@ class ApiController extends Controller
 
         $node = $em->getRepository('NomaNomaBundle:Node')
             ->find($data['node']);
-   
+
         if (!$node) {
             return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such node')));
         }
 
         $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
             ->find($data['nodeprop']);
-   
+
         if (!$nodeprop) {
             return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such nodeprop')));
         }
@@ -283,5 +305,5 @@ class ApiController extends Controller
         $em->flush();
 
         return new Response(json_encode(array('result' => 'OK')));
-    } 
+    }
 }
