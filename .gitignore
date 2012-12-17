@@ -10,3 +10,5 @@ composer.phar
 *~
 *.bak
 *.swp
+._.DS_Store
+.DS_Store
