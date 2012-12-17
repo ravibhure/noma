@@ -124,7 +124,7 @@ NOMA.nodes = NOMA.nodes || {};
     var refresh_nodeprops = function(node_id, el_target) {
         $(el_target).empty();
 
-        var multiselect = ns.html.multi_select('select_nodeprop_' + node_id, 'selected nodeprops', 'deselected nodeprops');
+        var multiselect = ns.html.multi_select('select_nodeprop_' + node_id, 'selected properties', 'deselected properties');
 
         $(el_target).append(multiselect);
 
