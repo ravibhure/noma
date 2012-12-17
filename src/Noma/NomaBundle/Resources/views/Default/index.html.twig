@@ -14,21 +14,18 @@
     <thead>
         <tr><th>node</th><th>properties</th></tr>
     </thead>
-    <tbody>
-        {% for node in nodes %}
-        <tr><td>{{ node.getName() }}</td>
-            <td>
-                {% for prop in node.getNodeProps() %}
-                {{ prop.getNodePropDef().getName() }}: {{ prop.getContent() }},
-                {% endfor %}
-            </td>
-        </tr>
-        {% endfor %}
+    <tbody id="nodeslist_body">
     </tbody>
 </table>
 <script>
     $(document).ready(function() {
         $('#nav-nodes').addClass('active');
+        var cfg = {
+            'base_url': '{{ path('noma_noma_homepage') }}'
+        };
+        NOMA.init(cfg);
+        NOMA.nodes.init();
+        NOMA.nodes.refresh();
     });
 </script>
 {% endblock %}
