@@ -8,17 +8,17 @@ noma_noma_services:
 
 noma_noma_api_json_nodes:
     pattern: /api/json_get_nodes/
-    defaults: { _controller: NomaNomaBundle:Api:jsonGetNodes }
+    defaults: { _controller: NomaNomaBundle:Api:jsonGetNodes, _format: json }
 
 noma_noma_api_json_nodeprops:
     pattern: /api/json_get_nodeprops/
-    defaults: { _controller: NomaNomaBundle:Api:jsonGetNodeProps }
+    defaults: { _controller: NomaNomaBundle:Api:jsonGetNodeProps, _format: json }
 
 noma_noma_api_json_node_add_nodeprop:
     pattern: /api/json_node_add_nodeprop/
-    defaults: { _controller: NomaNomaBundle:Api:jsonNodeAddNodeprop}
+    defaults: { _controller: NomaNomaBundle:Api:jsonNodeAddNodeprop, _format: json }
 
 noma_noma_api_json_node_remove_nodeprop:
     pattern: /api/json_node_remove_nodeprop/
-    defaults: { _controller: NomaNomaBundle:Api:jsonNodeRemoveNodeprop}
+    defaults: { _controller: NomaNomaBundle:Api:jsonNodeRemoveNodeprop, _format: json }
 
