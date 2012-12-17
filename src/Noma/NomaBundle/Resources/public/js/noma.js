@@ -176,6 +176,7 @@ NOMA.nodes = NOMA.nodes || {};
                 $('#nodeslist_body').append(
                     '<tr>' +
                     '<td style="width:200px;">' + value['name'] + '</td>' +
+                    '<td style="width:200px;">' + value['ip'] + '</td>' +
                     '<td class="node_nodepropcount" id="node_nodeprops_' + value.id + '">' +
                     '<a href="#" class="node_link" id="#node_link_' + value['id'] + '">' +
                     value.nodeprops.length + '</a>' +
