@@ -190,6 +190,19 @@ class ApiController extends Controller
             $q->setParameter('node', $data['node']);
         }
 
+        // exclude nodeprops having this node
+        if (isset($data['exclude_node'])) {
+            $ci = $this->getDoctrine()->getRepository('NomaNomaBundle:NodeProp');
+            $q2 = $ci->createQueryBuilder('n2');
+            $q2->select(array('n2.id'));
+            $q2->leftJoin('n2.nodes', 'p2');
+            $q2->where('p2.id = :exclude_node');
+            $q2->getDQL();
+
+            $q->andWhere($q->expr()->notIn('e.id', $q2->getDQL()));
+            $q->setParameter('exclude_node', $data['exclude_node']);
+        }
+
         $total = $this->_getResultCount($q);
 
         $q->addOrderBy('e.content', 'ASC');
@@ -231,7 +244,8 @@ class ApiController extends Controller
             Array('page', 'integer'),
             Array('node', 'integer'),
             Array('nodepropdef', 'integer'),
-            Array('nodepropdefname', 'text')
+            Array('nodepropdefname', 'text'),
+            Array('exclude_node', 'integer')
         ));
 
         return new Response(json_encode($this->_getNodeProps($data)));
