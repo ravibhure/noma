@@ -17,9 +17,8 @@ namespace Noma\NomaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-
-use Noma\NomaBundle\Entity\Node;
 use Symfony\Component\HttpFoundation\Request;
+use Noma\NomaBundle\Entity\Node;
 
 class NodeController extends Controller
 {
@@ -40,16 +39,16 @@ class NodeController extends Controller
             ->getForm();
         
         if ($request->isMethod('POST')) {
-        	$form->bind($request);
-        	if ($form->isValid()) {
-        		$n = new Node();
-        		$n->setName($form->get('name')->getData());
-        		$n->setIp($form->get('ip')->getData());
-        		$n->setStatus('0');
-        		$em = $this->getDoctrine()->getManager();
-        		$em->persist($n);
-        		$em->flush();
-        	}
+            $form->bind($request);
+            if ($form->isValid()) {
+                $n = new Node();
+                $n->setName($form->get('name')->getData());
+                $n->setIp($form->get('ip')->getData());
+                $n->setStatus('0');
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($n);
+                $em->flush();
+            }
         }
         
         return $this->render('NomaNomaBundle:Node:index.html.twig',
