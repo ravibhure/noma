@@ -19,10 +19,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 use Noma\NomaBundle\Entity\Node;
+use Symfony\Component\HttpFoundation\Request;
 
 class NodeController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $nodes = $this->getDoctrine()
             ->getRepository('NomaNomaBundle:Node')
@@ -37,7 +38,20 @@ class NodeController extends Controller
             ->add('name', 'text', array('label' => 'hostname'))
             ->add('ip', 'text', array('label' => 'ip address'))
             ->getForm();
-
+        
+        if ($request->isMethod('POST')) {
+        	$form->bind($request);
+        	if ($form->isValid()) {
+        		$n = new Node();
+        		$n->setName($form->get('name')->getData());
+        		$n->setIp($form->get('ip')->getData());
+        		$n->setStatus('0');
+        		$em = $this->getDoctrine()->getManager();
+        		$em->persist($n);
+        		$em->flush();
+        	}
+        }
+        
         return $this->render('NomaNomaBundle:Node:index.html.twig',
             array('nodes' => $nodes, 'form' => $form->createView()));
     }
