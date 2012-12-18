@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Noma\NomaBundle\Entity\Node;
 
-class DefaultController extends Controller
+class NodeController extends Controller
 {
     public function indexAction()
     {
@@ -38,7 +38,7 @@ class DefaultController extends Controller
             ->add('ip', 'text', array('label' => 'ip address'))
             ->getForm();
 
-        return $this->render('NomaNomaBundle:Default:index.html.twig',
+        return $this->render('NomaNomaBundle:Node:index.html.twig',
             array('nodes' => $nodes, 'form' => $form->createView()));
     }
 }
