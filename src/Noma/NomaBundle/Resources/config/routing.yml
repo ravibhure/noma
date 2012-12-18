@@ -6,6 +6,10 @@ noma_noma_services:
     pattern: /services/
     defaults: { _controller: NomaNomaBundle:Services:index }
 
+noma_noma_nodepropdefs:
+    pattern: /nodepropdefs/
+    defaults: { _controller: NomaNomaBundle:NodePropDefs:index }
+
 noma_noma_api_json_nodes:
     pattern: /api/json_get_nodes/
     defaults: { _controller: NomaNomaBundle:Api:jsonGetNodes, _format: json }

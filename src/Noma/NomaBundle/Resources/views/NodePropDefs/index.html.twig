@@ -1,0 +1,22 @@
+{% extends 'NomaNomaBundle::base.html.twig' %}
+
+{% block content %}
+<form method="post" class="form-inline">
+    <fieldset>
+        {{ form_widget(form.name, { 'attr': {'placeholder': 'NodePropDef'} }) }}
+        {{ form_widget(form.single) }}
+        <input type="submit" value="Save" class="btn">
+        {{ form_rest(form) }}
+    </fieldset>
+</form>
+
+<table id="nodepropdeflist" class="table table-striped">
+    <thead>
+        <tr><th>NodePropDefs</th></tr>
+    </thead>
+</table>
+{% for nodepropdefs in nodepropdef %}
+    {{ nodepropdefs.name }}
+{% endfor %}
+   
+{% endblock %}
