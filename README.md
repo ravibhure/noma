@@ -50,6 +50,7 @@ Noma Authors
 
 * Jochem Kossen <jochem@jkossen.nl>
 * Ivo Schooneman <ivo@schooneman.net>
+* Thomas van der Jagt
 
 Noma Copyright
 --------------
