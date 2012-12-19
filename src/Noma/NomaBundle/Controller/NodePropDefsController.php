@@ -61,7 +61,7 @@ class NodePropDefsController extends Controller
         return $this->render('NomaNomaBundle:NodePropDefs:index.html.twig', array(
                 'activenodepropdef' => $activenodepropdef,
                 'form' => $form->createView()));
-  
+
     }
 
     public function getInactiveAction()
