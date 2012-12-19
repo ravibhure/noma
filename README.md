@@ -1,7 +1,7 @@
 Noma: Node Management with good taste!
 ======================================
 
-a web interface for managing the configuration of (large) collections of nodes
+A web interface for managing the configuration of (large) collections of nodes
 
 Current status
 --------------
