@@ -26,27 +26,22 @@ class NodePropDefsController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $nodepropdef = $this->getDoctrine()
-            ->getRepository('NomaNomaBundle:NodePropDef')
-            ->findAll();
+        $db = $this->getDoctrine()
+            ->getRepository('NomaNomaBundle:NodePropDef');
+        $query = $db->createQueryBuilder('p')
+            ->where('p.name != :name')
+            ->setParameter('name', 'service')
+            ->andWhere('p.active = :active')
+            ->setParameter('active', '1')
+            ->getQuery();
 
-        /*
-        if (!$nodepropdef) {
-            $n = new NodePropDef();
-            $n->setName('service');
+		$activenodepropdef = $query->getResult();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($n);
-            $em->flush();
-
-            $nodepropdef = $n;
-        }
-        
-        */
         $np = new NodePropDef();
         $form = $this->createFormBuilder($np)
             ->add('name', 'text', array('label' => 'nodepropdef'))
-            ->add('single', 'checkbox', array('label' => 'single'))
+            ->add('single', 'checkbox', array('label' => 'single', 'required' => false))
+            ->add('active', 'checkbox', array('label' => 'active', 'required' => false))
             ->getForm();
         
         if ($request->isMethod('POST')) {
@@ -55,6 +50,7 @@ class NodePropDefsController extends Controller
                 $s = new NodePropDef();
                 $s->setName($form->get('name')->getData());
                 $s->setSingle($form->get('single')->getData());
+                $s->setActive($form->get('active')->getData());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($s);
@@ -62,11 +58,27 @@ class NodePropDefsController extends Controller
             }
         }
 
-        //$nodeprops = $nodepropdef->getNodeProps();
-
         return $this->render('NomaNomaBundle:NodePropDefs:index.html.twig', array(
-                'nodepropdef' => $nodepropdef,
+                'activenodepropdef' => $activenodepropdef,
                 'form' => $form->createView()));
        
+    }
+
+    public function getInactiveAction()
+    {
+        $db = $this->getDoctrine()
+            ->getRepository('NomaNomaBundle:NodePropDef');
+        $query = $db->createQueryBuilder('p')
+            ->where('p.name != :name')
+            ->setParameter('name', 'service')
+            ->andWhere('p.active = :active')
+            ->setParameter('active', '0')
+            ->getQuery();
+
+        $inactivenodepropdef = $query->getResult();
+
+        return $this->render('NomaNomaBundle:NodePropDefs:inactivenodepropdef.html.twig', array(
+            'inactivenodepropdef' => $inactivenodepropdef));
+  
     }
 }

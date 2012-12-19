@@ -5,18 +5,21 @@
     <fieldset>
         {{ form_widget(form.name, { 'attr': {'placeholder': 'NodePropDef'} }) }}
         {{ form_widget(form.single) }}
+        {{ form_widget(form.active) }}
         <input type="submit" value="Save" class="btn">
         {{ form_rest(form) }}
     </fieldset>
 </form>
+
 
 <table id="nodepropdeflist" class="table table-striped">
     <thead>
         <tr><th>NodePropDefs</th></tr>
     </thead>
 </table>
-{% for nodepropdefs in nodepropdef %}
+{% for nodepropdefs in activenodepropdef %}
     {{ nodepropdefs.name }}
 {% endfor %}
-   
+<br><br>
+<input type=button onClick="location.href='inactive'" value='Show Inactive'>
 {% endblock %}
