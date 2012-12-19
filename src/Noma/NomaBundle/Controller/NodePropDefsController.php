@@ -35,7 +35,7 @@ class NodePropDefsController extends Controller
             ->setParameter('active', '1')
             ->getQuery();
 
-		$activenodepropdef = $query->getResult();
+        $activenodepropdef = $query->getResult();
 
         $np = new NodePropDef();
         $form = $this->createFormBuilder($np)
@@ -43,7 +43,7 @@ class NodePropDefsController extends Controller
             ->add('single', 'checkbox', array('label' => 'single', 'required' => false))
             ->add('active', 'checkbox', array('label' => 'active', 'required' => false))
             ->getForm();
-        
+
         if ($request->isMethod('POST')) {
             $form->bind($request);
             if ($form->isValid()) {
@@ -61,7 +61,7 @@ class NodePropDefsController extends Controller
         return $this->render('NomaNomaBundle:NodePropDefs:index.html.twig', array(
                 'activenodepropdef' => $activenodepropdef,
                 'form' => $form->createView()));
-       
+  
     }
 
     public function getInactiveAction()
@@ -79,6 +79,6 @@ class NodePropDefsController extends Controller
 
         return $this->render('NomaNomaBundle:NodePropDefs:inactivenodepropdef.html.twig', array(
             'inactivenodepropdef' => $inactivenodepropdef));
-  
+
     }
 }
