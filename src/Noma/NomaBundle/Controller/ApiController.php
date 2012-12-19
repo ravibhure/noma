@@ -29,7 +29,8 @@ class ApiController extends Controller
      *
      * @return Array request data
      */
-    protected function _getRequestData($form_fields) {
+    protected function _getRequestData($form_fields)
+    {
         $request = $this->getRequest();
 
         $fb = $this->createFormBuilder();
@@ -61,7 +62,8 @@ class ApiController extends Controller
      *
      * @return Array querybuilder, first_result and limit
      */
-    protected function _getStdQueryBuilder($entity, $data) {
+    protected function _getStdQueryBuilder($entity, $data)
+    {
         $limit = 25;
         $max_limit = 100;
         $page = 1;
@@ -109,13 +111,15 @@ class ApiController extends Controller
      *
      * @return integer number of records
      */
-    protected function _getResultCount($q) {
+    protected function _getResultCount($q)
+    {
         $r = clone($q);
         $query = $r->select('count(e.id)')->getQuery();
         return $query->getSingleScalarResult();
     }
 
-    protected function _getNodes($data) {
+    protected function _getNodes($data)
+    {
         $qb = $this->_getStdQueryBuilder('Node', $data);
 
         $q = $qb['q'];
@@ -161,7 +165,8 @@ class ApiController extends Controller
         );
     }
 
-    protected function _getNodeProps($data) {
+    protected function _getNodeProps($data)
+    {
         $qb = $this->_getStdQueryBuilder('NodeProp', $data);
 
         $q = $qb['q'];
@@ -215,7 +220,8 @@ class ApiController extends Controller
         );
     }
 
-    public function jsonGetNodesAction() {
+    public function jsonGetNodesAction()
+    {
         $data = $this->_getRequestData(Array(
             Array('page_limit', 'integer'),
             Array('page', 'integer'),
@@ -231,7 +237,8 @@ class ApiController extends Controller
      *
      * @return Response
      */
-    public function jsonGetNodePropsAction() {
+    public function jsonGetNodePropsAction()
+    {
         $data = $this->_getRequestData(Array(
             Array('page_limit', 'integer'),
             Array('page', 'integer'),
@@ -244,7 +251,8 @@ class ApiController extends Controller
         return new Response(json_encode($this->_getNodeProps($data)));
     }
 
-    public function jsonNodeAddNodepropAction() {
+    public function jsonNodeAddNodepropAction()
+    {
         $data = $this->_getRequestData(Array(
             Array('nodeprop', 'integer'),
             Array('node', 'integer')
@@ -278,7 +286,8 @@ class ApiController extends Controller
         return new Response(json_encode(array('result' => 'OK')));
     }
 
-    public function jsonNodeRemoveNodepropAction() {
+    public function jsonNodeRemoveNodepropAction()
+    {
         $data = $this->_getRequestData(Array(
             Array('nodeprop', 'integer'),
             Array('node', 'integer')

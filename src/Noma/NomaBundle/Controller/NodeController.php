@@ -22,7 +22,8 @@ use Noma\NomaBundle\Entity\Node;
 
 class NodeController extends Controller
 {
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request)
+    {
         $nodes = $this->getDoctrine()
             ->getRepository('NomaNomaBundle:Node')
             ->findAll();

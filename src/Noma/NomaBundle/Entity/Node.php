@@ -76,7 +76,8 @@ class Node
      */
     protected $updated;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->nodeprops = new ArrayCollection();
 
         $this->created = new \DateTime();
@@ -88,7 +89,8 @@ class Node
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -98,7 +100,8 @@ class Node
      * @param string $name
      * @return Node
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -109,7 +112,8 @@ class Node
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -119,7 +123,8 @@ class Node
      * @param string $ip
      * @return Node
      */
-    public function setIp($ip) {
+    public function setIp($ip)
+    {
         $this->ip = $ip;
 
         return $this;
@@ -130,7 +135,8 @@ class Node
      *
      * @return string
      */
-    public function getIp() {
+    public function getIp()
+    {
         return $this->ip;
     }
 
@@ -140,7 +146,8 @@ class Node
      * @param integer $status
      * @return Node
      */
-    public function setStatus($status) {
+    public function setStatus($status)
+    {
         $this->status = $status;
 
         return $this;
@@ -151,28 +158,32 @@ class Node
      *
      * @return integer
      */
-    public function getStatus() {
+    public function getStatus()
+    {
         return $this->status;
     }
 
     /**
      * Add Nodeprop
      */
-    public function addNodeProp(NodeProp $nodeprop) {
+    public function addNodeProp(NodeProp $nodeprop)
+    {
         $this->nodeprops->add($nodeprop);
     }
 
     /**
      * Remove Nodeprop
      */
-    public function removeNodeProp(NodeProp $nodeprop) {
+    public function removeNodeProp(NodeProp $nodeprop)
+    {
         $this->nodeprops->removeElement($nodeprop);
     }
 
     /**
      * Get Nodeprops
      */
-    public function getNodeprops() {
+    public function getNodeprops()
+    {
         return $this->nodeprops;
     }
 
@@ -182,7 +193,8 @@ class Node
      * @param \DateTime $created
      * @return Node
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
@@ -193,7 +205,8 @@ class Node
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
@@ -203,7 +216,8 @@ class Node
      * @param \DateTime $updated
      * @return Node
      */
-    public function setUpdated($updated) {
+    public function setUpdated($updated)
+    {
         $this->updated = $updated;
 
         return $this;
@@ -214,7 +228,8 @@ class Node
      *
      * @return \DateTime
      */
-    public function getUpdated() {
+    public function getUpdated()
+    {
         return $this->updated;
     }
 
@@ -223,7 +238,8 @@ class Node
      *
      * @ORM\PreUpdate
      */
-    public function preUpdate() {
+    public function preUpdate()
+    {
         $this->updated = new \DateTime();
     }
 }
