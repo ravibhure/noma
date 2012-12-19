@@ -181,7 +181,10 @@ NOMA.nodes = NOMA.nodes || {};
                     '<a href="#" class="node_link" id="#node_link_' + value['id'] + '">' +
                     value.nodeprops.length + '</a>' +
                     '<div id="nodepropslist_' + value.id + '" class="nodeslist" style="display:none;width:250;height:200;"></div>' +
-                    '</td></tr>');
+                    '</td>' +
+                    '<td style="width:200px;">' +
+                    '<a href="#" class"node_link" id="#node_link_' + value['id'] + '">Deactivate</a>' +
+                	'</td></tr>');
             });
         });
     };
