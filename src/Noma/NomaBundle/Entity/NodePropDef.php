@@ -68,8 +68,7 @@ class NodePropDef
      */
     protected $nodeprops;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->nodeprops = new ArrayCollection();
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
@@ -80,8 +79,7 @@ class NodePropDef
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -91,8 +89,7 @@ class NodePropDef
      * @param string $name
      * @return Node
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
     
         return $this;
@@ -103,8 +100,7 @@ class NodePropDef
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -113,8 +109,7 @@ class NodePropDef
      *
      * @param string $name
      */
-    public function setSingle($single)
-    {
+    public function setSingle($single) {
         $this->single = $single;
     }
 
@@ -123,8 +118,7 @@ class NodePropDef
      *
      * @return boolean
      */
-    public function getSingle()
-    {
+    public function getSingle() {
         return $this->single;
     }
 
@@ -133,8 +127,7 @@ class NodePropDef
      *
      * @return boolean
      */
-    public function isSingle()
-    {
+    public function isSingle() {
         return $this->getSingle();
     }
 
@@ -144,8 +137,7 @@ class NodePropDef
      * @param \DateTime $created
      * @return Node
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
     
         return $this;
@@ -156,8 +148,7 @@ class NodePropDef
      *
      * @return \DateTime 
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -167,8 +158,7 @@ class NodePropDef
      * @param \DateTime $updated
      * @return Node
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
     
         return $this;
@@ -179,8 +169,7 @@ class NodePropDef
      *
      * @return \DateTime 
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
@@ -189,8 +178,7 @@ class NodePropDef
      *
      * @return NodeProps
      */
-    public function getNodeProps()
-    {
+    public function getNodeProps() {
         return $this->nodeprops;
     }
 
@@ -199,8 +187,7 @@ class NodePropDef
      *
      * @ORM\PreUpdate
      */
-    public function preUpdate()
-    {
+    public function preUpdate() {
         $this->updated = new \DateTime();
     }
 }
