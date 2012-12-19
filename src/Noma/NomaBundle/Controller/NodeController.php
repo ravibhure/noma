@@ -38,7 +38,7 @@ class NodeController extends Controller
             ->add('ip', 'text', array('label' => 'ip address'))
             ->getForm();
         
-        if ($request->isMethod('POST')) 
+        if ($request->isMethod('POST')) {
             $form->bind($request);
             if ($form->isValid()) {
                 $n = new Node();
