@@ -49,6 +49,13 @@ class NodePropDef
      */
     protected $single;
 
+/**
+     * @var boolean $active
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    protected $active;
+
     /**
      * @var \DateTime $created
      *
@@ -128,6 +135,26 @@ class NodePropDef
      */
     public function isSingle() {
         return $this->getSingle();
+    }
+
+    /**
+     * Set active
+     *
+     * @param active $name
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 
     /**

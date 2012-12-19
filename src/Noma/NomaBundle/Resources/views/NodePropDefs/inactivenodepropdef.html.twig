@@ -1,0 +1,14 @@
+{% extends 'NomaNomaBundle::base.html.twig' %}
+
+{% block content %}
+
+<table id="nodepropdeflist" class="table table-striped">
+    <thead>
+        <tr><th>Inactive NodePropDefs</th></tr>
+    </thead>
+</table>
+{% for nodepropdefs in inactivenodepropdef %}
+    {{ nodepropdefs.name }}
+{% endfor %}
+ 
+{% endblock %}
