@@ -23,8 +23,7 @@ use Noma\NomaBundle\Entity\NodePropDef;
 
 class FixtureLoader implements FixtureInterface
 {
-    public function load(ObjectManager $manager)
-    {
+    public function load(ObjectManager $manager) {
         $nodepropdefs_desc = array(
             array('os', true),
             array('location', true),

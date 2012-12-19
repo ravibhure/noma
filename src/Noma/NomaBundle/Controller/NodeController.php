@@ -22,8 +22,7 @@ use Noma\NomaBundle\Entity\Node;
 
 class NodeController extends Controller
 {
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $nodes = $this->getDoctrine()
             ->getRepository('NomaNomaBundle:Node')
             ->findAll();
@@ -37,7 +36,7 @@ class NodeController extends Controller
             ->add('name', 'text', array('label' => 'hostname'))
             ->add('ip', 'text', array('label' => 'ip address'))
             ->getForm();
-        
+
         if ($request->isMethod('POST')) {
             $form->bind($request);
             if ($form->isValid()) {
@@ -50,7 +49,7 @@ class NodeController extends Controller
                 $em->flush();
             }
         }
-        
+
         return $this->render('NomaNomaBundle:Node:index.html.twig',
             array('nodes' => $nodes, 'form' => $form->createView()));
     }

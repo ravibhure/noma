@@ -24,8 +24,7 @@ use Noma\NomaBundle\Entity\NodePropDef;
 
 class ServicesController extends Controller
 {
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $nodepropdef = $this->getDoctrine()
             ->getRepository('NomaNomaBundle:NodePropDef')
             ->findOneByName('service');

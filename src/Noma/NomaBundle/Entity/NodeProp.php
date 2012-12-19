@@ -54,7 +54,7 @@ class NodeProp
      * @ORM\JoinTable(name="node_nodeprop")
      */
     protected $nodes;
-    
+
     /**
      * @var \DateTime $created
      *
