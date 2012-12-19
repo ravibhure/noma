@@ -91,7 +91,6 @@ class NodePropDef
      */
     public function setName($name) {
         $this->name = $name;
-    
         return $this;
     }
 
@@ -139,7 +138,6 @@ class NodePropDef
      */
     public function setCreated($created) {
         $this->created = $created;
-    
         return $this;
     }
 
@@ -160,7 +158,6 @@ class NodePropDef
      */
     public function setUpdated($updated) {
         $this->updated = $updated;
-    
         return $this;
     }
 
