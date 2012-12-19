@@ -118,9 +118,9 @@
   <exec executable="phpdox"/>
  </target>
 
-# <target name="phpunit" description="Run unit tests with PHPUnit">
-#  <exec executable="phpunit" failonerror="true"/>
-# </target>
+ <target name="phpunit" description="Run unit tests with PHPUnit">
+  <exec executable="phpunit" failonerror="false"/>
+ </target>
 
  <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">
   <exec executable="phpcb">
