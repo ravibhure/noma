@@ -12,3 +12,4 @@ composer.phar
 *.swp
 ._.DS_Store
 .DS_Store
+phpunit.xml.dist
