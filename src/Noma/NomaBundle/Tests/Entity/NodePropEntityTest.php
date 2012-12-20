@@ -7,9 +7,9 @@ use Noma\NomaBundle\Entity\NodeProp;
 
 class NodePropEntityTest extends WebTestCase
 {
-    public function testIndex()
+    public function testNewNodeProp()
     {
     $n = new NodeProp();
-        $this->assertEquals(1, 1);
+    $this->assertEquals(1, 1);
     }
 }
