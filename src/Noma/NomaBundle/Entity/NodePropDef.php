@@ -49,7 +49,7 @@ class NodePropDef
      */
     protected $single;
 
-/**
+    /**
      * @var boolean $active
      *
      * @ORM\Column(name="active", type="boolean")
