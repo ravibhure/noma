@@ -220,6 +220,42 @@ class ApiController extends Controller
         );
     }
 
+    protected function _getNodePropDefs($data)
+    {
+        
+        $qb = $this->_getStdQueryBuilder('NodePropDef', $data);
+
+        $q = $qb['q'];
+
+        $q->select(array('e'));
+
+        // Exclude nodepropdef service
+        $q->where('e.name != :name');
+        $q->setParameter('name', 'service');
+       
+        // Show only active nodepropdefs
+        $q->andWhere('e.active = :active');
+        $q->setParameter('active', '1');
+
+        $total = $this->_getResultCount($q);
+
+        $q->addOrderBy('e.name', 'ASC');
+
+        $q->setFirstResult($qb['first_result']);
+        $q->setMaxResults($qb['limit']);
+
+        $query = $q->getQuery();
+
+        $array_result = $query->getArrayResult();
+
+        return array(
+            'nodepropdefs_total' => $total,
+            'nodepropdefs' => $array_result
+        );
+
+    }
+
+
     public function jsonGetNodesAction()
     {
         $data = $this->_getRequestData(Array(
@@ -230,6 +266,21 @@ class ApiController extends Controller
         ));
 
         return new Response(json_encode($this->_getNodes($data)));
+    }
+
+    /**
+     * Retrieve NodePropDefs
+     *
+     * @return Response
+     */
+    public function jsonGetNodePropDefsAction()
+    {
+        $data = $this->_getRequestData(Array(
+            Array('page_limit', 'integer'),
+            Array('page', 'integer'),
+        ));
+
+        return new Response(json_encode($this->_getNodePropDefs($data)));
     }
 
     /**
