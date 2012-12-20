@@ -2,8 +2,11 @@
 
 namespace Noma\NomaBundle\Tests\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Noma\NomaBundle\Entity\Node;
+use Noma\NomaBundle\Entity\NodeProp;
+
 
 class NodeEntityTest extends WebTestCase
 {
@@ -58,4 +61,15 @@ class NodeEntityTest extends WebTestCase
         $result = $n->getUpdated($time);
         $this->assertEquals($result, $time);
     }
+
+    public function testNodeAddNodeProp()
+    {
+        $n = new Node();
+        $np = new NodeProp();
+        $n->addNodeProp($np);
+        $result = $n->getNodeprops();
+        $expect = new ArrayCollection();
+        $expect->add($np);
+        $this->assertEquals($result, $expect);
+    }    
 }
