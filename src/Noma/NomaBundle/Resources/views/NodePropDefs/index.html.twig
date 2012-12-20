@@ -11,15 +11,21 @@
     </fieldset>
 </form>
 
-
 <table id="nodepropdeflist" class="table table-striped">
     <thead>
         <tr><th>NodePropDefs</th></tr>
     </thead>
+    <tbody id="nodepropdefs_body">
+    </tbody>
 </table>
-{% for nodepropdefs in activenodepropdef %}
-    {{ nodepropdefs.name }}
-{% endfor %}
-<br><br>
-<input type=button onClick="location.href='inactive'" value='Show Inactive'>
+<script>
+    $(document).ready(function() {
+        $('#nav-nodepropdefs').addClass('active');
+        var cfg = {
+            'base_url': '{{ path('noma_noma_homepage') }}'
+        };
+        NOMA.init(cfg);
+        NOMA.nodepropdefs.refresh();
+    });
+</script>
 {% endblock %}
