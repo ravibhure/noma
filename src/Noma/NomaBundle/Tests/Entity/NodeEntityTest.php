@@ -12,7 +12,7 @@ class NodeEntityTest extends WebTestCase
     $n = new Node();
     $n->setName('phpunit');
     $result = $n->getName();
-    
+
     $this->assertEquals($result, 'phpunit');
     }
 
@@ -21,7 +21,7 @@ class NodeEntityTest extends WebTestCase
         $n = new Node();
         $n->setIp('1.2.3.4');
         $result = $n->getIp();
-    
+
         $this->assertEquals($result, '1.2.3.4');
     }
 
@@ -29,7 +29,7 @@ class NodeEntityTest extends WebTestCase
     {
         $n = new Node();
         $result = $n->getId();
-    
+
         $this->assertEquals($result, NULL);
     }
 
@@ -38,7 +38,7 @@ class NodeEntityTest extends WebTestCase
         $n = new Node();
         $n->setStatus('1');
         $result = $n->getStatus();
-    
+
         $this->assertEquals($result, '1');
     }
     
