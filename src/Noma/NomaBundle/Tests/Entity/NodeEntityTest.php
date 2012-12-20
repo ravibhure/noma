@@ -48,7 +48,7 @@ class NodeEntityTest extends WebTestCase
     public function testNodeCreated()
     {
         $n = new Node();
-        $time = DateTime();
+        $time = "2012-12-20 11:28:14";
         $n->setCreated($time);
         $result = $n->getCreated($time);
     
@@ -58,7 +58,7 @@ class NodeEntityTest extends WebTestCase
     public function testNodeUpdated()
     {
     $n = new Node();
-        $time = DateTime();
+        $time = "2012-12-20 11:28:14";
         $n->setUpdated($time);
         $result = $n->getUpdated($time);
     
