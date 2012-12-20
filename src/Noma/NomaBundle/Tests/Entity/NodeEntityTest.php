@@ -12,11 +12,11 @@ class NodeEntityTest extends WebTestCase
 {
     public function testNodeName()
     {
-    $n = new Node();
-    $name = 'phpUnit';
-    $n->setName($name);
-    $result = $n->getName();
-    $this->assertEquals($result, $name);
+        $n = new Node();
+        $name = 'phpUnit';
+        $n->setName($name);
+        $result = $n->getName();
+        $this->assertEquals($result, $name);
     }
 
     public function testNodeIp()
@@ -55,7 +55,7 @@ class NodeEntityTest extends WebTestCase
 
     public function testNodeUpdated()
     {
-    $n = new Node();
+        $n = new Node();
         $time = "2012-12-20 11:28:14";
         $n->setUpdated($time);
         $result = $n->getUpdated($time);
