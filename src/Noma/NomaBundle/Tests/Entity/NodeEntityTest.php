@@ -71,5 +71,5 @@ class NodeEntityTest extends WebTestCase
         $expect = new ArrayCollection();
         $expect->add($np);
         $this->assertEquals($result, $expect);
-    }    
+    }
 }
