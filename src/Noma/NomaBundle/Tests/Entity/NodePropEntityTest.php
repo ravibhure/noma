@@ -16,6 +16,13 @@ class NodePropEntityTest extends WebTestCase
         $this->assertEquals($np->getNodePropDef(), $npd->getId());
     }
 
+    public function testNodePropId()
+    {
+        $np = new NodeProp();
+        $result = $np->getId();
+        $this->assertEquals($result, NULL);
+    }
+
     public function testNewNodePropContent()
     {
         $np = new NodeProp();
