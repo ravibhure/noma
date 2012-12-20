@@ -4,7 +4,7 @@ namespace Noma\NomaBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class NodeControllerTest extends WebTestCase
 {
     public function testIndex()
     {
