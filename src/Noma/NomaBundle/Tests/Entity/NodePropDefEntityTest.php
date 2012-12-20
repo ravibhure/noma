@@ -42,7 +42,7 @@ class NodePropDefEntityTest extends WebTestCase
         $result = $npd->getCreated($time);
         $this->assertEquals($result, $time);
     }
-    
+
     public function testNodePropDefUpdated()
     {
         $npd = new NodePropDef();
