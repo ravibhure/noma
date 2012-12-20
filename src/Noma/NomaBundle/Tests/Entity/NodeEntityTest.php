@@ -49,7 +49,7 @@ class NodeEntityTest extends WebTestCase
         $result = $n->getCreated($time);
         $this->assertEquals($result, $time);
     }
-    
+
     public function testNodeUpdated()
     {
     $n = new Node();
