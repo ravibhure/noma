@@ -3,13 +3,13 @@
 namespace Noma\NomaBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Noma\NomaBundle\Entity\Node;
+use Noma\NomaBundle\Entity\NodeProp;
 
-class NodeEntityTest extends WebTestCase
+class NodePropEntityTest extends WebTestCase
 {
     public function testIndex()
     {
-	$n = new Node();
-        $this->assertEquals(1,1);
+    $n = new NodeProp();
+        $this->assertEquals(1, 1);
     }
 }

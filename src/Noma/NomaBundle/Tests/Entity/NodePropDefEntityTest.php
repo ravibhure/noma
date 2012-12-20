@@ -9,7 +9,7 @@ class NodePropDefEntityTest extends WebTestCase
 {
     public function testIndex()
     {
-	$n = new NodePropDef();
-        $this->assertEquals(1,1);
+    $n = new NodePropDef();
+        $this->assertEquals(1, 1);
     }
 }
