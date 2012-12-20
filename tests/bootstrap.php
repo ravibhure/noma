@@ -10,6 +10,6 @@ if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) {
 	die(1);
 }
  
-$_SERVER['HTTP_HOST'] = trim(file_get_contents(__DIR__ . '/host'));
+$_SERVER['HTTP_HOST'] = trim(file_get_contents(__DIR__ . '/test.php'));
  
 define('CLI', true);
