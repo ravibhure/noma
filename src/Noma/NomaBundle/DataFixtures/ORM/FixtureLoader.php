@@ -26,15 +26,17 @@ class FixtureLoader implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $nodepropdefs_desc = array(
-            array('os', true),
-            array('location', true),
-            array('service', false));
+            array('os', true, true),
+            array('location', true, true),
+            array('service', false, true),
+        );
 
         $nodepropdefs = array();
         foreach ($nodepropdefs_desc as $n) {
             $nodepropdef = new NodePropDef();
             $nodepropdef->setName($n[0]);
             $nodepropdef->setSingle($n[1]);
+            $nodepropdef->setActive($n[2]);
             $manager->persist($nodepropdef);
             $nodepropdefs[] = $nodepropdef;
         }
