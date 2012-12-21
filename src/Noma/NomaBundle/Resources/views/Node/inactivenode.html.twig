@@ -1,0 +1,14 @@
+{% extends 'NomaNomaBundle::base.html.twig' %}
+
+{% block content %}
+
+<table id="nodelist" class="table table-striped">
+    <thead>
+        <tr><th>Inactive Nodes</th></tr>
+    </thead>
+</table>
+{% for nodes in inactivenode %}
+    {{ nodes.name }}
+{% endfor %}
+ 
+{% endblock %}

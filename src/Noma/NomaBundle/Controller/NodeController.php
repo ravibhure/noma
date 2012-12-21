@@ -26,7 +26,7 @@ class NodeController extends Controller
     {
         $nodes = $this->getDoctrine()
             ->getRepository('NomaNomaBundle:Node')
-            ->findAll();
+            ->findByStatus('0');
 
         if (!$nodes) {
             throw $this->createNotFoundException('No nodes found.');
@@ -53,5 +53,16 @@ class NodeController extends Controller
 
         return $this->render('NomaNomaBundle:Node:index.html.twig',
             array('nodes' => $nodes, 'form' => $form->createView()));
+    }
+
+    public function getInactiveAction()
+    {
+        $inactivenode = $this->getDoctrine()
+        ->getRepository('NomaNomaBundle:Node')
+        ->findByStatus('1');
+
+        return $this->render('NomaNomaBundle:Node:inactivenode.html.twig', array(
+                'inactivenode' => $inactivenode));
+
     }
 }

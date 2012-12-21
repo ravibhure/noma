@@ -14,6 +14,10 @@ noma_noma_nodepropdefs_inactive:
     pattern: /nodepropdefs/inactive
     defaults: { _controller: NomaNomaBundle:NodePropDefs:getInactive }
 
+noma_noma_nodes_inactive:
+    pattern: /inactive
+    defaults: { _controller: NomaNomaBundle:Node:getInactive }
+
 noma_noma_api_json_nodes:
     pattern: /api/json_get_nodes/
     defaults: { _controller: NomaNomaBundle:Api:jsonGetNodes, _format: json }
