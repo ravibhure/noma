@@ -26,9 +26,9 @@ class FixtureLoader implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $nodepropdefs_desc = array(
-            array('os', true, true),
-            array('location', true, true),
-            array('service', false, true),
+            0 => array('os', true, true),
+            1 => array('location', true, true),
+            2 => array('service', false, true),
         );
 
         $nodepropdefs = array();
@@ -41,40 +41,77 @@ class FixtureLoader implements FixtureInterface
             $nodepropdefs[] = $nodepropdef;
         }
 
-        $nodeprops = array();
-        $nodeprops_desc = array(
-            array($nodepropdefs[0], 'redhat'),
-            array($nodepropdefs[0], 'solaris'),
-            array($nodepropdefs[1], 'amsterdam'),
-            array($nodepropdefs[1], 'rotterdam'),
-            array($nodepropdefs[1], 'zwolle'),
-            array($nodepropdefs[2], 'webserver'),
-            array($nodepropdefs[2], 'dnsserver'),
-            array($nodepropdefs[2], 'ntpserver')
-        );
+        $oses = array();
+        $oses_desc = array(
+            'redhat', 'ubuntu', 'gentoo',
+            'freebsd', 'solaris');
 
-        foreach ($nodeprops_desc as $n) {
+        $locations = array();
+        $locations_desc = array(
+            'amsterdam', 'rotterdam', 'zwolle',
+            'leeuwarden', 'tilburg', 'groningen');
+
+        $services = array();
+        $services_desc = array(
+            'webserver', 'dnsserver', 'ntpserver',
+            'nfsserver', 'smbserver', 'steppingstone');
+
+        foreach ($oses_desc as $n) {
             $nodeprop = new NodeProp();
-            $nodeprop->setNodePropDef($n[0]);
-            $nodeprop->setContent($n[1]);
+            $nodeprop->setNodePropDef($nodepropdefs[0]);
+            $nodeprop->setContent($n);
             $manager->persist($nodeprop);
-            $nodeprops[] = $nodeprop;
+            $oses[] = $nodeprop;
+        }
+
+        foreach ($locations_desc as $n) {
+            $nodeprop = new NodeProp();
+            $nodeprop->setNodePropDef($nodepropdefs[1]);
+            $nodeprop->setContent($n);
+            $manager->persist($nodeprop);
+            $locations[] = $nodeprop;
+        }
+
+        foreach ($services_desc as $n) {
+            $nodeprop = new NodeProp();
+            $nodeprop->setNodePropDef($nodepropdefs[2]);
+            $nodeprop->setContent($n);
+            $manager->persist($nodeprop);
+            $services[] = $nodeprop;
         }
 
         $nodes_desc = array(
-            array('node01', '10.0.0.1', array($nodeprops[0], $nodeprops[2], $nodeprops[5], $nodeprops[6])),
-            array('node02', '10.0.0.2', array($nodeprops[1], $nodeprops[2], $nodeprops[7])),
-            array('node03', '10.0.0.3', array($nodeprops[0], $nodeprops[3], $nodeprops[6], $nodeprops[7])),
-            array('node04', '10.0.0.4', array($nodeprops[1], $nodeprops[4], $nodeprops[5], $nodeprops[6], $nodeprops[7]))
+            0 => array('node01', '10.0.0.1', true,
+            array($oses[0], $locations[0], $services[0], $services[2])),
+            1 => array('node02', '10.0.0.2', true,
+            array($oses[1], $locations[2], $services[3], $services[4], $services[5])),
+            2 => array('node03', '10.0.0.3', false,
+            array($oses[2], $locations[3], $services[1])),
+            3 => array('node04', '10.0.0.4', true,
+            array($oses[3], $locations[4])),
+            4 => array('node05', '10.0.0.5', true,
+            array($oses[4], $locations[5], $services[1], $services[2], $services[3], $services[5])),
+            5 => array('node06', '10.0.0.6', true,
+            array($oses[3], $locations[3], $services[2], $services[3], $services[4])),
+            6 => array('node07', '10.0.0.7', true,
+            array($oses[1], $locations[2], $services[0], $services[3])),
+            7 => array('node08', '10.0.0.8', false,
+            array($oses[2], $locations[1], $services[1], $services[2])),
+            8 => array('node09', '10.0.0.9', true,
+            array($oses[4], $locations[0], $services[3])),
+            9 => array('node10', '10.0.0.10', true,
+            array($oses[0], $locations[4], $services[2], $services[5]))
         );
 
         foreach ($nodes_desc as $n) {
             $node = new Node();
             $node->setName($n[0]);
             $node->setIp($n[1]);
-            $node->setActive(1);
-            foreach ($n[2] as $prop) {
+            $node->setActive($n[2]);
+
+            foreach ($n[3] as $prop) {
                 $node->addNodeProp($prop);
+                $prop->addNode($node);
             }
 
             $manager->persist($node);
