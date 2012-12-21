@@ -69,14 +69,15 @@ NOMA.utilities = NOMA.utilities || {};
 NOMA.html = NOMA.html || {};
 (function(ns) {
     var multi_select = function(id, title_selected, title_deselected) {
-        var str_html = '<div class="pull-left"><strong>' + title_selected + ':</strong><br>' +
+        var str_html = '<div class="pull-left noma_multiselect"><div class="pull-left">' +
+            '<strong>' + title_selected + ':</strong><br>' +
             '<select class="noma_multiselect" id="' + id + '_selected" size="10"></select></div>' +
             '<div class="btn-group pull-left" style="margin-top:75px;padding: 10px;">' +
             '<button class="btn" id="' + id + '_btn_select"><i class="icon-chevron-left"></i></button>' +
             '<button class="btn" id="' + id + '_btn_deselect"><i class="icon-chevron-right"></i></button>' +
             '</div><div class="pull-left"><strong>' + title_deselected + ':</strong><br>' +
             '<select class="noma_multiselect" id="' + id + '_deselected" size="10"></select>' +
-            '</div>';
+            '</div></div>';
 
         return str_html;
     };

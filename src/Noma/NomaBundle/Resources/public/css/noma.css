@@ -28,3 +28,7 @@ td {
 select.nodeprop {
     width: 300px;
 }
+
+div.noma_multiselect {
+    width: 550px;
+}
