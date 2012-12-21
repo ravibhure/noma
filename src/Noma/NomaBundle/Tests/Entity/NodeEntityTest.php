@@ -35,13 +35,13 @@ class NodeEntityTest extends WebTestCase
         $this->assertEquals($result, NULL);
     }
 
-    public function testNodeStatus()
+    public function testNodeActive()
     {
         $n = new Node();
-        $status = '1';
-        $n->setStatus($status);
-        $result = $n->getStatus();
-        $this->assertEquals($result, $status);
+        $active = '1';
+        $n->setActive($active);
+        $result = $n->getActive();
+        $this->assertEquals($result, $active);
     }
 
     public function testNodeCreated()
