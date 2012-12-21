@@ -25,10 +25,22 @@ td {
     vertical-align: top;
 }
 
+td.nodeslist_name, td.nodeslist_ip, td.nodeslist_deactivate {
+    width: 200px;
+}
+
 select.nodeprop {
     width: 300px;
 }
 
+td.node_nodepropcount div.nodepropslist {
+    display: none;
+}
+
 div.noma_multiselect {
     width: 550px;
+}
+
+td.nodeprop_nodecount div.nodeslist {
+    display:none;
 }

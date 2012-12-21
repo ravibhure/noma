@@ -84,14 +84,14 @@ NOMA.html = NOMA.html || {};
 
     var nodeslist_row = function(node) {
         var str_html = '<tr>' +
-            '<td style="width:200px;">' + node['name'] + '</td>' +
-            '<td style="width:200px;">' + node['ip'] + '</td>' +
+            '<td class="nodeslist_name">' + node['name'] + '</td>' +
+            '<td class="nodeslist_ip">' + node['ip'] + '</td>' +
             '<td class="node_nodepropcount" id="node_nodeprops_' + node['id'] + '">' +
             '<a href="#" class="node_link" id="#node_link_' + node['id'] + '">' +
             node.nodeprops.length + '</a>' +
-            '<div id="nodepropslist_' + node.id + '" class="nodeslist" style="display:none;width:250;height:200;"></div>' +
+            '<div id="nodepropslist_' + node.id + '" class="nodepropslist"></div>' +
             '</td>' +
-            '<td style="width:200px;">' +
+            '<td class="nodeslist_deactivate">' +
             '<a href="#" class"node_link" id="#node_link_' + node['id'] + '">Deactivate</a></td>' +
             '</tr>';
 
@@ -104,7 +104,7 @@ NOMA.html = NOMA.html || {};
             '<td class="nodeprop_nodecount" id="nodeprop_nodes_' + service['id'] + '">' +
             '<a href="#" class="service_link" id="#service_link_' + service['id'] + '">' +
             service.nodes.length + '</a>' +
-            '<div id="nodeslist_' + service.id + '" class="nodeslist" style="display:none;width:250;height:200;"></div>' +
+            '<div id="nodeslist_' + service.id + '" class="nodeslist"></div>' +
             '</td></tr>';
 
         return str_html;
