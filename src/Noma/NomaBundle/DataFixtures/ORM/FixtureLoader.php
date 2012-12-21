@@ -72,7 +72,7 @@ class FixtureLoader implements FixtureInterface
             $node = new Node();
             $node->setName($n[0]);
             $node->setIp($n[1]);
-            $node->setStatus(0);
+            $node->setActive(1);
             foreach ($n[2] as $prop) {
                 $node->addNodeProp($prop);
             }

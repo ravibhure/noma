@@ -50,11 +50,11 @@ class Node
     protected $ip;
 
     /**
-     * @var integer $status
+     * @var integer $active
      *
-     * @ORM\Column(name="status", type="smallint")
+     * @ORM\Column(name="active", type="smallint")
      */
-    protected $status;
+    protected $active;
 
     /**
      * @ORM\ManyToMany(targetEntity="NodeProp", mappedBy="nodes")
@@ -141,26 +141,26 @@ class Node
     }
 
     /**
-     * Set status
+     * Set active
      *
-     * @param integer $status
+     * @param integer $active
      * @return Node
      */
-    public function setStatus($status)
+    public function setActive($active)
     {
-        $this->status = $status;
+        $this->active = $active;
 
         return $this;
     }
 
     /**
-     * Get status
+     * Get active
      *
      * @return integer
      */
-    public function getStatus()
+    public function getActive()
     {
-        return $this->status;
+        return $this->active;
     }
 
     /**
