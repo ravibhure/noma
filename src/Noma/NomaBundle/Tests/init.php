@@ -1,20 +1,15 @@
 <?php
 
-namespace Noma\Nomabun\Tests;
+namespace Noma\NomaBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-
 use Noma\Noma\DataFixtures\ORM\FixtureLoader;
 
 class FixtureLoaderTest extends WebTestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-    }
 
     public function getEm()
     {
@@ -36,7 +31,7 @@ class FixtureLoaderTest extends WebTestCase
         return $this->getEm()->getRepository( 'Noma\NomaBundle\Entity\NodePropDef' );
     }
 
-    public function loadNetworkConfigurationFixtures()
+    public function loadAllFixtures()
     {
         $loader = new Loader();
         $loader->addFixture( new Node() );
@@ -45,10 +40,16 @@ class FixtureLoaderTest extends WebTestCase
         $this->loadFixtures( $loader );
     }
 
-    public function loadFixtures( $loader )
+    public function LoadFixtures( $loader )
     {
         $purger     = new ORMPurger();
         $executor   = new ORMExecutor( $this->getEm(), $purger );
         $executor->execute( $loader->getFixtures() );
     }
+    
+    public function testDB()
+    {
+        $this->assertEquals(1, 1);
+    }
 }
+?>
