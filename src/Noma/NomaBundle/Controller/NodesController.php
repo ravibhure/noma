@@ -51,7 +51,7 @@ class NodesController extends Controller
             }
         }
 
-        return $this->render('NomaNomaBundle:Node:index.html.twig',
+        return $this->render('NomaNomaBundle:Nodes:index.html.twig',
             array('nodes' => $nodes, 'form' => $form->createView()));
     }
 
@@ -61,7 +61,7 @@ class NodesController extends Controller
         ->getRepository('NomaNomaBundle:Node')
         ->findByStatus('1');
 
-        return $this->render('NomaNomaBundle:Node:inactivenode.html.twig', array(
+        return $this->render('NomaNomaBundle:Nodes:inactivenode.html.twig', array(
                 'inactivenode' => $inactivenode));
 
     }

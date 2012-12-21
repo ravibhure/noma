@@ -1,6 +1,6 @@
 noma_noma_homepage:
     pattern:  /
-    defaults: { _controller: NomaNomaBundle:Nodes:index }
+    defaults: { _controller: NomaNomaBundle:Status:index }
 
 noma_noma_nodes:
     pattern:  /nodes/
