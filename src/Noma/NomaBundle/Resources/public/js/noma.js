@@ -177,20 +177,20 @@ NOMA.nodes = NOMA.nodes || {};
                     '<tr>' +
                     '<td style="width:200px;">' + value['name'] + '</td>' +
                     '<td style="width:200px;">' + value['ip'] + '</td>' +
-                    '<td class="node_nodepropcount" id="node_nodeprops_' + value.id + '">' +
+                    '<td class="node_nodepropcount" id="node_nodeprops_' + value['id'] + '">' +
                     '<a href="#" class="node_link" id="#node_link_' + value['id'] + '">' +
                     value.nodeprops.length + '</a>' +
                     '<div id="nodepropslist_' + value.id + '" class="nodeslist" style="display:none;width:250;height:200;"></div>' +
                     '</td>' +
                     '<td style="width:200px;">' +
                     '<a href="#" class"node_link" id="#node_link_' + value['id'] + '">Deactivate</a>' +
-                	'</td></tr>');
+                    '</td></tr>');
             });
         });
     };
 
-    // Event handler for the servicelist: when the nr of nodes link is clicked, show the nodes
     var init = function() {
+        // event handler: show nodeprops when the 'nr of nodeprops' link is clicked
         $('#nodeslist_body').on('click', function(event) {
             if ($(event.target).is('a.node_link')) {
                 var id = event.target.id.replace('#node_link_', '');
@@ -309,8 +309,8 @@ NOMA.services = NOMA.services || {};
         });
     };
 
-    // Event handler for the servicelist: when the nr of nodes link is clicked, show the nodes
     var init = function() {
+        // event handler for the servicelist: when the nr of nodes link is clicked, show the nodes
         $('#servicelist_body').on('click', function(event) {
             if ($(event.target).is('a.service_link')) {
                 var id = event.target.id.replace('#service_link_', '');
