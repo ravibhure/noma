@@ -46,7 +46,7 @@ class FixtureLoaderTest extends WebTestCase
         $executor   = new ORMExecutor( $this->getEm(), $purger );
         $executor->execute( $loader->getFixtures() );
     }
-    
+
     public function testDB()
     {
         $this->assertEquals(1, 1);
