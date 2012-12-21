@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Noma\NomaBundle\Entity\Node;
 
-class NodeController extends Controller
+class NodesController extends Controller
 {
     public function indexAction(Request $request)
     {

@@ -1,7 +1,11 @@
 noma_noma_homepage:
     pattern:  /
-    defaults: { _controller: NomaNomaBundle:Node:index }
+    defaults: { _controller: NomaNomaBundle:Nodes:index }
 
+noma_noma_nodes:
+    pattern:  /nodes/
+    defaults: { _controller: NomaNomaBundle:Nodes:index }
+    
 noma_noma_services:
     pattern: /services/
     defaults: { _controller: NomaNomaBundle:Services:index }
@@ -15,8 +19,8 @@ noma_noma_nodepropdefs_inactive:
     defaults: { _controller: NomaNomaBundle:NodePropDefs:getInactive }
 
 noma_noma_nodes_inactive:
-    pattern: /inactive
-    defaults: { _controller: NomaNomaBundle:Node:getInactive }
+    pattern: /nodes/inactive
+    defaults: { _controller: NomaNomaBundle:Nodes:getInactive }
 
 noma_noma_api_json_nodes:
     pattern: /api/json_get_nodes/
