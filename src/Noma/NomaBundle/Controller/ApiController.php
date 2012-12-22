@@ -114,7 +114,8 @@ class ApiController extends Controller
     protected function _getResultCount($q)
     {
         $r = clone($q);
-        $query = $r->select('count(e.id)')->getQuery();
+        $r->select('count(e.id)');
+        $query = $r->getQuery();
         return $query->getSingleScalarResult();
     }
 
@@ -125,7 +126,6 @@ class ApiController extends Controller
         $q = $qb['q'];
 
         $q->leftJoin('e.nodeprops', 'p');
-        $q->select(array('e', 'p'));
 
         $q->where('1 = 1');
 
@@ -150,8 +150,11 @@ class ApiController extends Controller
 
         $total = $this->_getResultCount($q);
 
+        $q->groupBy('e');
         $q->addOrderBy('e.name', 'ASC');
 
+        $q->select(array('e.id', 'e.name', 'e.ip', 'e.active',
+            'e.created', 'e.updated', 'count(p.id) as propcount'));
         $q->setFirstResult($qb['first_result']);
         $q->setMaxResults($qb['limit']);
 

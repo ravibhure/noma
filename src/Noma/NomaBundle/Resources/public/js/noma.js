@@ -88,8 +88,8 @@ NOMA.html = NOMA.html || {};
             '<td class="nodeslist_ip">' + node['ip'] + '</td>' +
             '<td class="node_nodepropcount" id="node_nodeprops_' + node['id'] + '">' +
             '<a href="#" class="node_link" id="#node_link_' + node['id'] + '">' +
-            node.nodeprops.length + '</a>' +
-            '<div id="nodepropslist_' + node.id + '" class="nodepropslist"></div>' +
+            node['propcount'] + '</a>' +
+            '<div id="nodepropslist_' + node['id'] + '" class="nodepropslist"></div>' +
             '</td>' +
             '<td class="nodeslist_deactivate">' +
             '<a href="#" class"node_link" id="#node_link_' + node['id'] + '">Deactivate</a></td>' +
@@ -181,9 +181,12 @@ NOMA.nodes = NOMA.nodes || {};
         };
 
         ns.utilities.api_get('json_get_nodeprops', data, function(response, textStatus, jqXHR) {
-            $.each(response.nodeprops, function(index, value) {
-                $('#select_nodeprop_' + node_id + '_selected').append(
-                '<option value="' + value.id + '">' + value.nodepropdef.name + ': ' + value.content + '</option>');
+            $.each(response.nodeprops, function(index, nodeprop) {
+                $('<option>').attr({
+                    'value': nodeprop.id,
+                })
+                .text(nodeprop.nodepropdef.name + ': ' + nodeprop.content)
+                .appendTo($('#select_nodeprop_' + node_id + '_selected'));
             });
         });
 
@@ -192,9 +195,12 @@ NOMA.nodes = NOMA.nodes || {};
         };
 
         ns.utilities.api_get('json_get_nodeprops', data2, function(response, textStatus, jqXHR) {
-            $.each(response.nodeprops, function(index, value) {
-                $('#select_nodeprop_' + node_id + '_deselected').append(
-                '<option value="' + value.id + '">' + value.nodepropdef.name + ': ' + value.content + '</option>');
+            $.each(response.nodeprops, function(index, nodeprop) {
+                $('<option>').attr({
+                    'value': nodeprop.id
+                })
+                .text(nodeprop.nodepropdef.name + ': ' + nodeprop.content)
+                .appendTo($('#select_nodeprop_' + node_id + '_deselected'));
             });
         });
     };
