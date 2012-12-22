@@ -24,17 +24,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="nodepropdef")
  * @ORM\Entity
  */
-class NodePropDef
+class NodePropDef extends BaseNomaEntity
 {
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
     /**
      * @var string $name
      *
@@ -85,7 +76,7 @@ class NodePropDef
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -107,7 +98,7 @@ class NodePropDef
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -165,50 +156,6 @@ class NodePropDef
     }
 
     /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Node
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime 
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     * @return Node
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime 
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
      * Get NodeProps
      *
      * @return NodeProps
@@ -216,15 +163,5 @@ class NodePropDef
     public function getNodeProps()
     {
         return $this->nodeprops;
-    }
-
-    /**
-     * Invoked before the entity is updated.
-     *
-     * @ORM\PreUpdate
-     */
-    public function preUpdate()
-    {
-        $this->updated = new \DateTime();
     }
 }
