@@ -185,7 +185,7 @@ NOMA.nodes = NOMA.nodes || {};
                 $('<option>').attr({
                     'value': nodeprop.id,
                 })
-                .text(nodeprop.nodepropdef.name + ': ' + nodeprop.content)
+                .text(nodeprop.nodepropdef_name + ': ' + nodeprop.content)
                 .appendTo($('#select_nodeprop_' + node_id + '_selected'));
             });
         });
@@ -199,7 +199,7 @@ NOMA.nodes = NOMA.nodes || {};
                 $('<option>').attr({
                     'value': nodeprop.id
                 })
-                .text(nodeprop.nodepropdef.name + ': ' + nodeprop.content)
+                .text(nodeprop.nodepropdef_name + ': ' + nodeprop.content)
                 .appendTo($('#select_nodeprop_' + node_id + '_deselected'));
             });
         });
