@@ -150,11 +150,11 @@ class ApiController extends Controller
 
         $total = $this->_getResultCount($q);
 
+        $q->select(array('e.id', 'e.name', 'e.ip', 'e.active',
+            'e.created', 'e.updated', 'count(p.id) as propcount'));
         $q->groupBy('e');
         $q->addOrderBy('e.name', 'ASC');
 
-        $q->select(array('e.id', 'e.name', 'e.ip', 'e.active',
-            'e.created', 'e.updated', 'count(p.id) as propcount'));
         $q->setFirstResult($qb['first_result']);
         $q->setMaxResults($qb['limit']);
 
@@ -176,7 +176,6 @@ class ApiController extends Controller
 
         $q->leftJoin('e.nodepropdef', 'd');
         $q->leftJoin('e.nodes', 'n');
-        $q->select(array('e', 'd', 'n'));
 
         if (isset($data['nodepropdef'])) {
             $q->andWhere('d.id = :nodepropdef');
@@ -208,6 +207,8 @@ class ApiController extends Controller
 
         $total = $this->_getResultCount($q);
 
+        $q->select(array('e.id', 'd.id as nodepropdef_id', 'd.name as nodepropdef_name', 'e.content', 'e.created', 'e.updated', 'count(n.id) as nodecount'));
+        $q->groupBy('e');
         $q->addOrderBy('e.content', 'ASC');
 
         $q->setFirstResult($qb['first_result']);

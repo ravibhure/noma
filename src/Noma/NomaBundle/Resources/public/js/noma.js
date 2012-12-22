@@ -103,8 +103,8 @@ NOMA.html = NOMA.html || {};
             '<td style="width:200px;">' + service['content'] + '</td>' +
             '<td class="nodeprop_nodecount" id="nodeprop_nodes_' + service['id'] + '">' +
             '<a href="#" class="service_link" id="#service_link_' + service['id'] + '">' +
-            service.nodes.length + '</a>' +
-            '<div id="nodeslist_' + service.id + '" class="nodeslist"></div>' +
+            service['nodecount'] + '</a>' +
+            '<div id="nodeslist_' + service['id'] + '" class="nodeslist"></div>' +
             '</td></tr>';
 
         return str_html;
