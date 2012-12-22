@@ -119,6 +119,13 @@ class ApiController extends Controller
         return $query->getSingleScalarResult();
     }
 
+    /**
+     * Retrieve array of nodes
+     *
+     * @param Array $data array of filters
+     *
+     * @return Array
+     */
     protected function _getNodes($data)
     {
         $qb = $this->_getStdQueryBuilder('Node', $data);
@@ -168,6 +175,13 @@ class ApiController extends Controller
         );
     }
 
+    /**
+     * Retrieve array of node properties
+     *
+     * @param Array $data array of filters
+     *
+     * @return Array
+     */
     protected function _getNodeProps($data)
     {
         $qb = $this->_getStdQueryBuilder('NodeProp', $data);
@@ -224,6 +238,59 @@ class ApiController extends Controller
         );
     }
 
+    /**
+     * Add or remove nodeprop to/from node
+     *
+     * @return Response
+     */
+    protected function _adjustNodeprop($action)
+    {
+        $data = $this->_getRequestData(Array(
+            Array('nodeprop', 'integer'),
+            Array('node', 'integer')
+        ));
+
+        foreach (array_keys($data) as $key) {
+            if (empty($data[$key])) {
+                return new Response(json_encode(array('result' => 'ERROR',
+                    'errormsg' => 'missing required argument: ' . $key)));
+            }
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $node = $em->getRepository('NomaNomaBundle:Node')
+            ->find($data['node']);
+
+        if (!$node) {
+            return new Response(json_encode(array('result' => 'ERROR',
+                'errormsg' => 'no such node')));
+        }
+
+        $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
+            ->find($data['nodeprop']);
+
+        if (!$nodeprop) {
+            return new Response(json_encode(array('result' => 'ERROR',
+                'errormsg' => 'no such nodeprop')));
+        }
+
+        if ($action == "remove") {
+            $nodeprop->removeNode($node);
+        } else {
+            $nodeprop->addNode($node);
+        }
+
+        $em->flush();
+
+        return new Response(json_encode(array('result' => 'OK')));
+    }
+
+    /**
+     * Retrieve json encoded array of nodes
+     *
+     * @return Response
+     */
     public function jsonGetNodesAction()
     {
         $data = $this->_getRequestData(Array(
@@ -237,7 +304,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Retrieve node properties
+     * Retrieve json encoded array of node properties
      *
      * @return Response
      */
@@ -255,73 +322,23 @@ class ApiController extends Controller
         return new Response(json_encode($this->_getNodeProps($data)));
     }
 
+    /**
+     * Add nodeprop to node
+     *
+     * @return Response
+     */
     public function jsonNodeAddNodepropAction()
     {
-        $data = $this->_getRequestData(Array(
-            Array('nodeprop', 'integer'),
-            Array('node', 'integer')
-        ));
-
-        foreach (array_keys($data) as $key) {
-            if (empty($data[$key])) {
-                return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'missing required argument: ' . $key)));
-            }
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        $node = $em->getRepository('NomaNomaBundle:Node')
-            ->find($data['node']);
-
-        if (!$node) {
-            return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such node')));
-        }
-
-        $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
-            ->find($data['nodeprop']);
-
-        if (!$nodeprop) {
-            return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such nodeprop')));
-        }
-
-        $nodeprop->addNode($node);
-        $em->flush();
-
-        return new Response(json_encode(array('result' => 'OK')));
+        return $this->_adjustNodeprop('add');
     }
 
+    /**
+     * Remove nodeprop from node
+     *
+     * @return Response
+     */
     public function jsonNodeRemoveNodepropAction()
     {
-        $data = $this->_getRequestData(Array(
-            Array('nodeprop', 'integer'),
-            Array('node', 'integer')
-        ));
-
-        foreach (array_keys($data) as $key) {
-            if (empty($data[$key])) {
-                return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'missing required argument: ' . $key)));
-            }
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        $node = $em->getRepository('NomaNomaBundle:Node')
-            ->find($data['node']);
-
-        if (!$node) {
-            return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such node')));
-        }
-
-        $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
-            ->find($data['nodeprop']);
-
-        if (!$nodeprop) {
-            return new Response(json_encode(array('result' => 'ERROR', 'errormsg' => 'no such nodeprop')));
-        }
-
-        $nodeprop->removeNode($node);
-        $em->flush();
-
-        return new Response(json_encode(array('result' => 'OK')));
+        return $this->_adjustNodeprop('remove');
     }
 }
