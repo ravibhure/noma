@@ -5,7 +5,7 @@
     <fieldset>
         {{ form_widget(form.name, { 'attr': {'placeholder': 'NodePropDef'} }) }}
         {{ form_widget(form.single) }}
-        {{ form_widget(form.active) }}
+        {{ form_widget(form.active, { 'attr': {'checked': 'checked'} }) }}
         <input type="submit" value="Save" class="btn">
         {{ form_rest(form) }}
     </fieldset>
@@ -13,11 +13,12 @@
 
 <table id="nodepropdeflist" class="table table-striped">
     <thead>
-        <tr><th>NodePropDefs</th></tr>
+        <tr><th>NodePropDefs</th><th>NodeProps</th></tr>
     </thead>
     <tbody id="nodepropdefs_body">
     </tbody>
 </table>
+<button class="btn" type="button" <a href="#" id="click_me">Active</a></button>
 <script>
     $(document).ready(function() {
         $('#nav-nodepropdefs').addClass('active');
@@ -26,6 +27,7 @@
         };
         NOMA.init(cfg);
         NOMA.nodepropdefs.refresh();
+        NOMA.nodepropdefs.test();
     });
 </script>
 {% endblock %}

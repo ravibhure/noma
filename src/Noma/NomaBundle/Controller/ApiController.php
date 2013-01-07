@@ -188,7 +188,7 @@ class ApiController extends Controller
         if (isset($data['node'])) {
             $q->andWhere('n.id = :node');
             $q->setParameter('node', $data['node']);
-        }
+    }
 
         // exclude nodeprops having this node
         if (isset($data['exclude_node'])) {
@@ -224,19 +224,26 @@ class ApiController extends Controller
     {
         
         $qb = $this->_getStdQueryBuilder('NodePropDef', $data);
-
         $q = $qb['q'];
-
         $q->select(array('e'));
 
-        // Exclude nodepropdef service
+        // Exclude nodepropdef service by default
         $q->where('e.name != :name');
         $q->setParameter('name', 'service');
-       
-        // Show only active nodepropdefs
-        $q->andWhere('e.active = :active');
-        $q->setParameter('active', '1');
 
+        // Show inactive Nodepropdefs if inactive is set
+        if(isset($data['inactive']))
+        {
+            $q->andWhere('e.active = :active');
+            $q->setParameter('active', '0');
+        }
+        else
+        {
+            $q->andWhere('e.active = :active');
+            $q->setParameter('active', '1');
+        }
+      
+        
         $total = $this->_getResultCount($q);
 
         $q->addOrderBy('e.name', 'ASC');
@@ -278,6 +285,7 @@ class ApiController extends Controller
         $data = $this->_getRequestData(Array(
             Array('page_limit', 'integer'),
             Array('page', 'integer'),
+            Array('inactive', 'integer')
         ));
 
         return new Response(json_encode($this->_getNodePropDefs($data)));

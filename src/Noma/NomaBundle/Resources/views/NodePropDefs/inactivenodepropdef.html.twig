@@ -1,14 +1,21 @@
 {% extends 'NomaNomaBundle::base.html.twig' %}
 
 {% block content %}
-
 <table id="nodepropdeflist" class="table table-striped">
     <thead>
         <tr><th>Inactive NodePropDefs</th></tr>
     </thead>
+    <tbody id="nodepropdefs_body">
+    </tbody>
 </table>
-{% for nodepropdefs in inactivenodepropdef %}
-    {{ nodepropdefs.name }}
-{% endfor %}
- 
+<script>
+    $(document).ready(function() {
+        $('#nav-nodepropdefs').addClass('active');
+        var cfg = {
+            'base_url': '{{ path('noma_noma_homepage') }}'
+        };
+        NOMA.init(cfg);
+        NOMA.nodepropdefs.refresh();
+    });
+</script>
 {% endblock %}

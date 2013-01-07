@@ -331,86 +331,7 @@ NOMA.services = NOMA.services || {};
 ////////////////////////////////////////////////////////////////////////////
 NOMA.nodepropdefs = NOMA.nodepropdefs || {};
 (function(ns) {
-    /*
-    var add_nodeprop = function(node_id, nodeprop_id) {
-        var data = {
-            'nodeprop': nodeprop_id,
-            'node': node_id
-        };
-
-        ns.utilities.api_get('json_node_add_nodeprop', data, function(response, textStatus, jqXHR) {
-            $('#select_nodeprop_' + node_id + '_selected').append(
-                $('#select_nodeprop_' + node_id + '_deselected option:selected'));
-        });
-    };
-
-    var remove_nodeprop = function(node_id, nodeprop_id) {
-        var data = {
-            'nodeprop': nodeprop_id,
-            'node': node_id
-        };
-
-        ns.utilities.api_get('json_node_remove_nodeprop', data, function(response, textStatus, jqXHR) {
-            $('#select_nodeprop_' + node_id + '_deselected').append(
-                $('#select_nodeprop_' + node_id + '_selected option:selected'));
-        });
-    };
-
-    var show_nodeprops = function(node_id, el_target) {
-        $(el_target).toggle();
-        if ($(el_target).css('display') != 'none') {
-            refresh_nodeprops(node_id, el_target);
-        }
-    };
-
-    var refresh_nodeprops = function(node_id, el_target) {
-        $(el_target).empty();
-
-        var multiselect = ns.html.multi_select('select_nodeprop_' + node_id, 'selected properties', 'deselected properties');
-
-        $(el_target).append(multiselect);
-
-        // event handler: remove selected nodeprop from node
-        $('#select_nodeprop_' + node_id + '_btn_deselect').click(function() {
-            var nodeprop_id = $('#select_nodeprop_' + node_id + '_selected option:selected').val();
-            if (nodeprop_id != undefined) {
-                remove_nodeprop(node_id, nodeprop_id);
-            }
-        });
-
-        // event handler: add selected nodeprop to node
-        $('#select_nodeprop_' + node_id + '_btn_select').click(function() {
-            var nodeprop_id = $('#select_nodeprop_' + node_id + '_deselected option:selected').val();
-            if (nodeprop_id != undefined) {
-                add_nodeprop(node_id, nodeprop_id);
-            }
-        });
-
-        var data =  {
-            node: node_id
-        };
-
-        ns.utilities.api_get('json_get_nodeprops', data, function(response, textStatus, jqXHR) {
-            $.each(response.nodeprops, function(index, value) {
-                $('#select_nodeprop_' + node_id + '_selected').append(
-                    '<option value="' + value.id + '">' + value.nodepropdef.name + ': ' + value.content + '</option>');
-            });
-        });
-
-        var data2 = {
-            exclude_node: node_id
-        };
-
-        ns.utilities.api_get('json_get_nodeprops', data2, function(response, textStatus, jqXHR) {
-            $.each(response.nodeprops, function(index, value) {
-                $('#select_nodeprop_' + node_id + '_deselected').append(
-                    '<option value="' + value.id + '">' + value.nodepropdef.name + ': ' + value.content + '</option>');
-            });
-        });
-    };
-    */
-
-    // Refresh the nodes list
+    // Refresh the nodepropdef list
     var refresh = function() {
         var data = {};
 
@@ -419,30 +340,40 @@ NOMA.nodepropdefs = NOMA.nodepropdefs || {};
                 $('#nodepropdefs_body').append(
                     '<tr>' +
                     '<td style="width:200px;">' + value['name'] + '</td>' +
-                    //'<td class="node_nodepropcount" id="node_nodeprops_' + value['name'] + '">' +
-                    //'<a href="#" class="node_link" id="#node_link_' + value['name'] + '">' +
-                    //value.nodepropdefs.name + '</a>' +
-                    //'<div id="nodepropslist_' + value.id + '" class="nodeslist" style="display:none;width:250;height:200;"></div>' +
-                    //'</td>' +
-                    //'<td style="width:200px;">' +
-                    //'<a href="#" class"node_link" id="#node_link_' + value['id'] + '">Deactivate</a>' +
-                	//'</td>
                     '</tr>');
             });
         });
     };
 
-    // Event handler for the servicelist: when the nr of nodes link is clicked, show the nodes
-    //var init = function() {
-    //    $('#nodeslist_body').on('click', function(event) {
-    //        if ($(event.target).is('a.node_link')) {
-    //            var id = event.target.id.replace('#node_link_', '');
-    //            ns.nodes.show_nodeprops(id, '#nodepropslist_' + id);
-    //        }
-    //    });
-    //};
+    // Toggle Button to show active/inactive nodepropdefs
+    // Only the first click is working
+    var test = function(inactive) {
+    var data = {
+           inactive: 1 };
+        $('#click_me').toggle(function(event) {
+                    
+        ns.utilities.api_get('json_get_nodepropdefs', data, function(response, textStatus, jqXHR) {
+            $.each(response.nodepropdefs, function(index, value) {
+                $('#nodepropdefs_body').append(
+                    '<tr>' +
+                    '<td style="width:200px;">' + value['name'] + '</td>' +
+                    '</tr>');
+                });
+            });            
+        },
+        function(event) {
+          ns.utilities.api_get('json_get_nodepropdefs', data, function(response, textStatus, jqXHR) {
+            $.each(response.nodepropdefs, function(index, value) {
+                    $('#nodepropdefs_body').hide(value['name']);
+                    
+            });
 
+        });
+    });
+};
     //ns.nodes.init = init;
+    // test is used for the toggle button
+    ns.nodepropdefs.test = test;
     ns.nodepropdefs.refresh = refresh;
     //ns.nodes.show_nodeprops = show_nodeprops;
 
