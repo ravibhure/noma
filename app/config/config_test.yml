@@ -15,8 +15,14 @@ swiftmailer:
 
 doctrine:
     dbal:
-        default_connection: default
-        connections:
-            default:
-                driver: pdo_sqlite
-                path: %kernel.cache_dir%/test.db
+        driver:   pdo_sqlite
+        #path:     :memory:
+        #path: %kernel.cache_dir%/test.db
+        path: /tmp/test.db
+        #memory:  true
+        memory:   false
+        charset: UTF8
+    orm:
+        auto_generate_proxy_classes: true
+        auto_mapping: true
+
