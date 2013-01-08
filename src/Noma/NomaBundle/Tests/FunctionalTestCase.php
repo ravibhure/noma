@@ -10,14 +10,8 @@ abstract class FunctionalTestCase extends WebTestCase {
     protected $client;
     protected $entityManager;
 
-    public function __construct($name=NULL, array $data=array())
-    {
-        parent::__construct($name, $data);
-        $this->initialize();
-    }
-
-    protected static function initialize() {
-        self::createClient();
+    public static function setUpBeforeClass() {
+        static::createClient();
         $application = new Application(static::$kernel);
         $application->setAutoExit(false);
 
@@ -25,8 +19,7 @@ abstract class FunctionalTestCase extends WebTestCase {
     }
 
     private static function createDatabase($application) {
-        self::executeCommand($application, "doctrine:database:drop", array("--force" => true));
-        self::executeCommand($application, "doctrine:database:create");
+        self::executeCommand($application, "doctrine:schema:drop", array("--force" => true));
         self::executeCommand($application, "doctrine:schema:create");
         self::executeCommand($application, "doctrine:fixtures:load", array("--fixtures" => __DIR__ . "/../DataFixtures/ORM/test"));
     }
