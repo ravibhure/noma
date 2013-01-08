@@ -3,12 +3,12 @@
 namespace Noma\NomaBundle\Tests\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Noma\NomaBundle\Tests\FunctionalTestCase;
 use Noma\NomaBundle\Entity\Node;
 use Noma\NomaBundle\Entity\NodeProp;
 
 
-class NodeEntityTest extends WebTestCase
+class NodeEntityTest extends FunctionalTestCase
 {
     public function testNodeName()
     {

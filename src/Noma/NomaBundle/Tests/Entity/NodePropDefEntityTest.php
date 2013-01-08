@@ -2,10 +2,10 @@
 
 namespace Noma\NomaBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Noma\NomaBundle\Tests\FunctionalTestCase;
 use Noma\NomaBundle\Entity\NodePropDef;
 
-class NodePropDefEntityTest extends WebTestCase
+class NodePropDefEntityTest extends FunctionalTestCase
 {
     public function testNodeId()
     {
