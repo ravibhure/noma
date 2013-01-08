@@ -41,7 +41,7 @@ class ApiController extends Controller
         $form = $fb->getForm();
 
         if ($request->isMethod('POST')) {
-            $request_data = $request;
+            $request_data = $request->request->all();
         } else {
             $request_data = $request->query->all();
         }
