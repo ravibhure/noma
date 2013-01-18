@@ -10,7 +10,8 @@ abstract class FunctionalTestCase extends WebTestCase {
     protected $client;
     protected $entityManager;
 
-    public static function setUpBeforeClass() {
+    public static function setUpBeforeClass()
+    {
         static::createClient();
         $application = new Application(static::$kernel);
         $application->setAutoExit(false);
@@ -18,13 +19,15 @@ abstract class FunctionalTestCase extends WebTestCase {
         self::createDatabase($application);
     }
 
-    private static function createDatabase($application) {
+    private static function createDatabase($application)
+    {
         self::executeCommand($application, "doctrine:schema:drop", array("--force" => true));
         self::executeCommand($application, "doctrine:schema:create");
         self::executeCommand($application, "doctrine:fixtures:load", array("--fixtures" => __DIR__ . "/../DataFixtures/ORM/test"));
     }
 
-    private static function executeCommand($application, $command, Array $options = array()) {
+    private static function executeCommand($application, $command, Array $options = array())
+    {
         $options["-e"] = "test";
         $options["-q"] = null;
         $options["-n"] = true;
@@ -32,11 +35,13 @@ abstract class FunctionalTestCase extends WebTestCase {
         return $application->run(new ArrayInput($options));
     }
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->populateVariables();
     }
 
-    protected function populateVariables() {
+    protected function populateVariables()
+    {
         $this->client = static::createClient();
         $container = static::$kernel->getContainer();
         $this->entityManager = $container->get('doctrine')->getEntityManager();
