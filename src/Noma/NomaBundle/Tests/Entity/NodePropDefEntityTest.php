@@ -51,7 +51,7 @@ class NodePropDefEntityTest extends FunctionalTestCase
         $result = $npd->getUpdated($time);
         $this->assertEquals($result, $time);
     }
-    
+
     public function testNodePropDefActive()
     {
         $npd = new NodePropDef();
