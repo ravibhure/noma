@@ -10,6 +10,7 @@ Some screens are working, but there's no support for configuration management
 system yet. In other words, Noma is not yet usable.
 
 We do check our code using unit and functional tests, and monitor it using travis-ci:
+
 [![Build Status](https://travis-ci.org/jkossen/noma.png)](https://travis-ci.org/jkossen/noma)
 
 About
