@@ -9,7 +9,7 @@
  * It is also available through the world-wide-web at this URL:
  * http://www.gnu.org/licenses/gpl-3.0.txt
  *
- * @copyright  Copyright (c) 2012 Jochem Kossen <jochem@jkossen.nl>
+ * @copyright  Copyright (c) 2012-2013 Jochem Kossen <jochem@jkossen.nl>
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GPLv3
  */
 
