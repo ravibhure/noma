@@ -5,7 +5,7 @@ noma_noma_homepage:
 noma_noma_nodes:
     pattern:  /nodes/
     defaults: { _controller: NomaNomaBundle:Nodes:index }
-    
+
 noma_noma_services:
     pattern: /services/
     defaults: { _controller: NomaNomaBundle:Services:index }
