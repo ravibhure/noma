@@ -1,14 +1,14 @@
 <?php
 
-namespace Noma\NomaBundle\Tests\Controller;
+namespace Noma\NomaBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Noma\NomaBundle\Tests\FunctionalTestCase;
+use Noma\NomaBundle\Tests\UnitTestCase;
 use Noma\NomaBundle\Entity\Node;
 use Noma\NomaBundle\Entity\NodeProp;
 
 
-class NodeEntityTest extends FunctionalTestCase
+class NodeEntityTest extends UnitTestCase
 {
     public function testNodeName()
     {
