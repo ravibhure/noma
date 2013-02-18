@@ -22,7 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Noma\NomaBundle\Entity\Node
  *
  * @ORM\Table(name="node")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Noma\NomaBundle\Entity\NodeRepository")
  */
 class Node extends BaseNomaEntity
 {
