@@ -238,6 +238,25 @@ class ApiController extends Controller
         );
     }
 
+    protected function _jsonError($msg)
+    {
+        return $this->_jsonResponse(array(
+            'result' => 'ERROR',
+            'errormsg' => $msg));
+    }
+
+    protected function _jsonResponse($data)
+    {
+        return new Response(json_encode($data));
+    }
+
+    protected function _xmlResponse($data)
+    {
+        $xml = new SimpleXMLElement('<root/>');
+        array_walk_recursive($data, array ($xml, 'addChild'));
+        return new Response($xml->asXML());
+    }
+
     /**
      * Add or remove nodeprop to/from node
      *
@@ -252,8 +271,7 @@ class ApiController extends Controller
 
         foreach (array_keys($data) as $key) {
             if (empty($data[$key])) {
-                return new Response(json_encode(array('result' => 'ERROR',
-                    'errormsg' => 'missing required argument: ' . $key)));
+                return $this->_jsonError('missing required argument: ' . $key);
             }
         }
 
@@ -263,16 +281,14 @@ class ApiController extends Controller
             ->find($data['node']);
 
         if (!$node) {
-            return new Response(json_encode(array('result' => 'ERROR',
-                'errormsg' => 'no such node')));
+            return $this->_jsonError('no such node');
         }
 
         $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
             ->find($data['nodeprop']);
 
         if (!$nodeprop) {
-            return new Response(json_encode(array('result' => 'ERROR',
-                'errormsg' => 'no such nodeprop')));
+            return $this->_jsonError('no such nodeprop');
         }
 
         if ($action == "remove") {
@@ -283,7 +299,7 @@ class ApiController extends Controller
 
         $em->flush();
 
-        return new Response(json_encode(array('result' => 'OK')));
+        return (array('result' => 'OK'));
     }
 
     /**
@@ -300,7 +316,7 @@ class ApiController extends Controller
             Array('exclude_nodeprop', 'integer')
         ));
 
-        return new Response(json_encode($this->_getNodes($data)));
+        return $this->_jsonResponse($this->_getNodes($data));
     }
 
     /**
@@ -319,7 +335,7 @@ class ApiController extends Controller
             Array('exclude_node', 'integer')
         ));
 
-        return new Response(json_encode($this->_getNodeProps($data)));
+        return $this->_jsonResponse($this->_getNodeProps($data));
     }
 
     /**
