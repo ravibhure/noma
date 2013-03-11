@@ -3,9 +3,9 @@ namespace Noma\NomaBundle\Entity;
 
 class NodePropRepository extends BaseEntityRepository
 {
-    public function getNodes($data)
+    public function getNodeProps($data)
     {
-        $qb = $this->_getStdQueryBuilder('NodeProp', $data);
+        $qb = $this->_getStdQueryBuilder($data);
 
         $q = $qb['q'];
 
