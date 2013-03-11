@@ -51,6 +51,13 @@ class ApiController extends Controller
         return $form->getData();
     }
 
+    /**
+     * Return an error message in a standardized way
+     *
+     * @param String $msg message
+     *
+     * @return Response encoded response
+     */
     protected function _error($msg)
     {
         return $this->_response(array(
@@ -58,6 +65,13 @@ class ApiController extends Controller
             'errormsg' => $msg));
     }
 
+    /**
+     * Abstraction for returning responses in a standardized way
+     *
+     * @param Array $data Array of data to be encoded
+     *
+     * @return Response encoded response
+     */
     protected function _response($data)
     {
         return new Response(json_encode($data));
