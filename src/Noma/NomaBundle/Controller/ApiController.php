@@ -51,35 +51,6 @@ class ApiController extends Controller
         return $form->getData();
     }
 
-    /**
-     * Retrieve array of nodes
-     *
-     * @param Array $data array of filters
-     *
-     * @return Array
-     */
-    protected function _getNodes($data)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('NomaNomaBundle:Node');
-        return $repo->getNodes($data);
-    }
-
-    /**
-     * Retrieve array of node properties
-     *
-     * @param Array $data array of filters
-     *
-     * @return Array
-     */
-    protected function _getNodeProps($data)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('NomaNomaBundle:NodeProp');
-        return $repo->getNodeProps($data);
-
-    }
-
     protected function _error($msg)
     {
         return $this->_response(array(
@@ -151,7 +122,10 @@ class ApiController extends Controller
             Array('exclude_nodeprop', 'integer')
         ));
 
-        return $this->_response($this->_getNodes($data));
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('NomaNomaBundle:Node');
+
+        return $this->_response($repo->getNodes($data));
     }
 
     /**
@@ -170,7 +144,10 @@ class ApiController extends Controller
             Array('exclude_node', 'integer')
         ));
 
-        return $this->_response($this->_getNodeProps($data));
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('NomaNomaBundle:NodeProp');
+
+        return $this->_response($repo->getNodeProps($data));
     }
 
     /**
