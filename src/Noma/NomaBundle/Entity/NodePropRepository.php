@@ -42,7 +42,8 @@ class NodePropRepository extends BaseEntityRepository
 
         $total = $this->_getResultCount($q);
 
-        $q->select(array('e.id', 'd.id as nodepropdef_id', 'd.name as nodepropdef_name', 'e.content', 'e.created', 'e.updated', 'count(n.id) as nodecount'));
+        $q->select(array('e.id', 'd.id as nodepropdef_id', 'd.name as nodepropdef_name',
+            'e.content', 'e.created', 'e.updated', 'count(n.id) as nodecount'));
         $q->groupBy('e');
         $q->addOrderBy('e.content', 'ASC');
 
