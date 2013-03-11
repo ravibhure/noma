@@ -28,8 +28,7 @@ class NodeRepository extends BaseEntityRepository
 
         // exclude nodes having this nodeprop
         if (isset($data['exclude_nodeprop'])) {
-            $ci = $this->getDoctrine()->getRepository('NomaNomaBundle:Node');
-            $q2 = $ci->createQueryBuilder('n2');
+            $q2 = $this->createQueryBuilder('n2');
             $q2->select(array('n2.id'));
             $q2->leftJoin('n2.nodeprops', 'p2');
             $q2->where('p2.id = :exclude_nodeprop');
