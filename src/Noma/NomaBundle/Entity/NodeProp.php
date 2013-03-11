@@ -22,7 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Noma\NomaBundle\Entity\NodeProp
  *
  * @ORM\Table(name="nodeprop")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Noma\NomaBundle\Entity\NodePropRepository")
  */
 class NodeProp extends BaseNomaEntity
 {
