@@ -52,6 +52,20 @@ class ApiController extends Controller
     }
 
     /**
+     * Return an Success message in a standardized way
+     *
+     * @param String $msg optional message
+     *
+     * @return Response encoded response
+     */
+    protected function _ok($msg = 'Operation Successful')
+    {
+        return $this->_response(array(
+            'result' => 'OK',
+            'errormsg' => $msg));
+    }
+
+    /**
      * Return an error message in a standardized way
      *
      * @param String $msg message
@@ -89,6 +103,8 @@ class ApiController extends Controller
             Array('node', 'integer')
         ));
 
+        $msg = 'Assigning nodeprop successful';
+
         foreach (array_keys($data) as $key) {
             if (empty($data[$key])) {
                 return $this->_error('missing required argument: ' . $key);
@@ -113,13 +129,14 @@ class ApiController extends Controller
 
         if ($action == "remove") {
             $nodeprop->removeNode($node);
+            $msg = 'Unassigning nodeprop successful';
         } else {
             $nodeprop->addNode($node);
         }
 
         $em->flush();
 
-        return (array('result' => 'OK'));
+        return $this->_ok($msg);
     }
 
     /**
