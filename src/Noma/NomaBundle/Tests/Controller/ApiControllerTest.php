@@ -14,7 +14,7 @@ class ApiControllerTest extends FunctionalTestCase
     {
         $client = static::createClient();
         $data = array('nodepropdef' => 1);
-        $url = '/api/json_get_nodeprops/';
+        $url = '/api/get_nodeprops/';
 
         $crawler = $client->request('GET', $url, $data);
         $response1 = $client->getResponse();
