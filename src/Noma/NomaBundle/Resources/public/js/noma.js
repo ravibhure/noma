@@ -128,7 +128,7 @@ NOMA.nodes = NOMA.nodes || {};
             'node': node_id
         };
 
-        ns.utilities.api_get('json_node_add_nodeprop', data, function(response, textStatus, jqXHR) {
+        ns.utilities.api_get('node_add_nodeprop', data, function(response, textStatus, jqXHR) {
             $('#select_nodeprop_' + node_id + '_selected').append(
                 $('#select_nodeprop_' + node_id + '_deselected option:selected'));
         });
@@ -140,7 +140,7 @@ NOMA.nodes = NOMA.nodes || {};
             'node': node_id
         };
 
-        ns.utilities.api_get('json_node_remove_nodeprop', data, function(response, textStatus, jqXHR) {
+        ns.utilities.api_get('node_remove_nodeprop', data, function(response, textStatus, jqXHR) {
             $('#select_nodeprop_' + node_id + '_deselected').append(
                 $('#select_nodeprop_' + node_id + '_selected option:selected'));
         });
@@ -180,7 +180,7 @@ NOMA.nodes = NOMA.nodes || {};
             node: node_id
         };
 
-        ns.utilities.api_get('json_get_nodeprops', data, function(response, textStatus, jqXHR) {
+        ns.utilities.api_get('get_nodeprops', data, function(response, textStatus, jqXHR) {
             $.each(response.nodeprops, function(index, nodeprop) {
                 $('<option>').attr({
                     'value': nodeprop.id,
@@ -194,7 +194,7 @@ NOMA.nodes = NOMA.nodes || {};
             exclude_node: node_id
         };
 
-        ns.utilities.api_get('json_get_nodeprops', data2, function(response, textStatus, jqXHR) {
+        ns.utilities.api_get('get_nodeprops', data2, function(response, textStatus, jqXHR) {
             $.each(response.nodeprops, function(index, nodeprop) {
                 $('<option>').attr({
                     'value': nodeprop.id
@@ -209,7 +209,7 @@ NOMA.nodes = NOMA.nodes || {};
     var refresh = function() {
         var data = {};
 
-        ns.utilities.api_get('json_get_nodes', data, function(response, textStatus, jqXHR) {
+        ns.utilities.api_get('get_nodes', data, function(response, textStatus, jqXHR) {
             $.each(response.nodes, function(index, node) {
                 $('#nodeslist_body').append(ns.html.nodeslist_row(node));
             });
@@ -244,7 +244,7 @@ NOMA.services = NOMA.services || {};
             'nodeprop': nodeprop_id
         };
 
-        ns.utilities.api_get('json_node_add_nodeprop', data, function(response, textStatus, jqXHR) {
+        ns.utilities.api_get('node_add_nodeprop', data, function(response, textStatus, jqXHR) {
             $('#select_node_' + nodeprop_id + '_selected').append(
                 $('#select_node_' + nodeprop_id + '_deselected option:selected'));
         });
@@ -256,7 +256,7 @@ NOMA.services = NOMA.services || {};
             'nodeprop': nodeprop_id
         };
 
-        ns.utilities.api_get('json_node_remove_nodeprop', data, function(response, textStatus, jqXHR) {
+        ns.utilities.api_get('node_remove_nodeprop', data, function(response, textStatus, jqXHR) {
             $('#select_node_' + nodeprop_id + '_deselected').append(
                 $('#select_node_' + nodeprop_id + '_selected option:selected'));
         });
@@ -289,7 +289,7 @@ NOMA.services = NOMA.services || {};
             nodeprop: nodeprop_id
         };
 
-        ns.utilities.api_get('json_get_nodes', data, function(response, textStatus, jqXHR) {
+        ns.utilities.api_get('get_nodes', data, function(response, textStatus, jqXHR) {
             $.each(response.nodes, function(index, value) {
                 $('#select_node_' + nodeprop_id + '_selected').append(
                 '<option value="' + value.id + '">' + value.name + '</option>');
@@ -300,7 +300,7 @@ NOMA.services = NOMA.services || {};
             exclude_nodeprop: nodeprop_id
         };
 
-        ns.utilities.api_get('json_get_nodes', data2, function(response, textStatus, jqXHR) {
+        ns.utilities.api_get('get_nodes', data2, function(response, textStatus, jqXHR) {
             $.each(response.nodes, function(index, value) {
                 $('#select_node_' + nodeprop_id + '_deselected').append(
                 '<option value="' + value.id + '">' + value.name + '</option>');
@@ -322,7 +322,7 @@ NOMA.services = NOMA.services || {};
             nodepropdefname: 'service'
         };
 
-        ns.utilities.api_get('json_get_nodeprops', data, function(response, textStatus, jqXHR) {
+        ns.utilities.api_get('get_nodeprops', data, function(response, textStatus, jqXHR) {
             $.each(response.nodeprops, function(index, service) {
                 $('#serviceslist_body').append(ns.html.serviceslist_row(service));
             });

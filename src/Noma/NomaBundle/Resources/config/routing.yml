@@ -22,19 +22,19 @@ noma_noma_nodes_inactive:
     pattern: /nodes/inactive
     defaults: { _controller: NomaNomaBundle:Nodes:getInactive }
 
-noma_noma_api_json_nodes:
-    pattern: /api/json_get_nodes/
-    defaults: { _controller: NomaNomaBundle:Api:jsonGetNodes, _format: json }
+noma_noma_api_get_nodes:
+    pattern: /api/get_nodes/
+    defaults: { _controller: NomaNomaBundle:Api:getNodes }
 
-noma_noma_api_json_nodeprops:
-    pattern: /api/json_get_nodeprops/
-    defaults: { _controller: NomaNomaBundle:Api:jsonGetNodeProps, _format: json }
+noma_noma_api_get_nodeprops:
+    pattern: /api/get_nodeprops/
+    defaults: { _controller: NomaNomaBundle:Api:getNodeProps }
 
-noma_noma_api_json_node_add_nodeprop:
-    pattern: /api/json_node_add_nodeprop/
-    defaults: { _controller: NomaNomaBundle:Api:jsonNodeAddNodeprop, _format: json }
+noma_noma_api_node_add_nodeprop:
+    pattern: /api/node_add_nodeprop/
+    defaults: { _controller: NomaNomaBundle:Api:nodeAddNodeprop }
 
-noma_noma_api_json_node_remove_nodeprop:
-    pattern: /api/json_node_remove_nodeprop/
-    defaults: { _controller: NomaNomaBundle:Api:jsonNodeRemoveNodeprop, _format: json }
+noma_noma_api_node_remove_nodeprop:
+    pattern: /api/node_remove_nodeprop/
+    defaults: { _controller: NomaNomaBundle:Api:nodeRemoveNodeprop }
 

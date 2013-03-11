@@ -80,23 +80,16 @@ class ApiController extends Controller
 
     }
 
-    protected function _jsonError($msg)
+    protected function _error($msg)
     {
-        return $this->_jsonResponse(array(
+        return $this->_response(array(
             'result' => 'ERROR',
             'errormsg' => $msg));
     }
 
-    protected function _jsonResponse($data)
+    protected function _response($data)
     {
         return new Response(json_encode($data));
-    }
-
-    protected function _xmlResponse($data)
-    {
-        $xml = new SimpleXMLElement('<root/>');
-        array_walk_recursive($data, array ($xml, 'addChild'));
-        return new Response($xml->asXML());
     }
 
     /**
@@ -113,7 +106,7 @@ class ApiController extends Controller
 
         foreach (array_keys($data) as $key) {
             if (empty($data[$key])) {
-                return $this->_jsonError('missing required argument: ' . $key);
+                return $this->_error('missing required argument: ' . $key);
             }
         }
 
@@ -123,14 +116,14 @@ class ApiController extends Controller
             ->find($data['node']);
 
         if (!$node) {
-            return $this->_jsonError('no such node');
+            return $this->_error('no such node');
         }
 
         $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
             ->find($data['nodeprop']);
 
         if (!$nodeprop) {
-            return $this->_jsonError('no such nodeprop');
+            return $this->_error('no such nodeprop');
         }
 
         if ($action == "remove") {
@@ -145,11 +138,11 @@ class ApiController extends Controller
     }
 
     /**
-     * Retrieve json encoded array of nodes
+     * Retrieve array of nodes
      *
      * @return Response
      */
-    public function jsonGetNodesAction()
+    public function getNodesAction()
     {
         $data = $this->_getRequestData(Array(
             Array('page_limit', 'integer'),
@@ -158,15 +151,15 @@ class ApiController extends Controller
             Array('exclude_nodeprop', 'integer')
         ));
 
-        return $this->_jsonResponse($this->_getNodes($data));
+        return $this->_response($this->_getNodes($data));
     }
 
     /**
-     * Retrieve json encoded array of node properties
+     * Retrieve array of node properties
      *
      * @return Response
      */
-    public function jsonGetNodePropsAction()
+    public function getNodePropsAction()
     {
         $data = $this->_getRequestData(Array(
             Array('page_limit', 'integer'),
@@ -177,7 +170,7 @@ class ApiController extends Controller
             Array('exclude_node', 'integer')
         ));
 
-        return $this->_jsonResponse($this->_getNodeProps($data));
+        return $this->_response($this->_getNodeProps($data));
     }
 
     /**
@@ -185,7 +178,7 @@ class ApiController extends Controller
      *
      * @return Response
      */
-    public function jsonNodeAddNodepropAction()
+    public function nodeAddNodepropAction()
     {
         return $this->_adjustNodeprop('add');
     }
@@ -195,7 +188,7 @@ class ApiController extends Controller
      *
      * @return Response
      */
-    public function jsonNodeRemoveNodepropAction()
+    public function nodeRemoveNodepropAction()
     {
         return $this->_adjustNodeprop('remove');
     }
