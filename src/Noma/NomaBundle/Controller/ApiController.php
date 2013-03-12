@@ -66,20 +66,6 @@ class ApiController extends Controller
     }
 
     /**
-     * Return an error message in a standardized way
-     *
-     * @param String $msg message
-     *
-     * @return Response encoded response
-     */
-    protected function _error($msg)
-    {
-        return $this->_response(array(
-            'result' => 'ERROR',
-            'errormsg' => $msg));
-    }
-
-    /**
      * Abstraction for returning responses in a standardized way
      *
      * @param Array $data Array of data to be encoded
@@ -107,24 +93,24 @@ class ApiController extends Controller
 
         foreach (array_keys($data) as $key) {
             if (empty($data[$key])) {
-                return $this->_error('missing required argument: ' . $key);
+                throw $this->createNotFoundException('Missing argument: ' . $key);
             }
         }
 
         $em = $this->getDoctrine()->getManager();
 
         $node = $em->getRepository('NomaNomaBundle:Node')
-            ->find($data['node']);
+            ->findOneById($data['node']);
 
-        if (!$node) {
-            return $this->_error('no such node');
+        if (!isset($node)) {
+            throw $this->createNotFoundException('No such node');
         }
 
         $nodeprop = $em->getRepository('NomaNomaBundle:NodeProp')
-            ->find($data['nodeprop']);
+            ->findOneById($data['nodeprop']);
 
-        if (!$nodeprop) {
-            return $this->_error('no such nodeprop');
+        if (!isset($nodeprop)) {
+            throw $this->createNotFoundException('No such node property');
         }
 
         if ($action == "remove") {
