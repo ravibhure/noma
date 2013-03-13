@@ -67,6 +67,21 @@ class ApiControllerTest extends FunctionalTestCase
         $this->assertTrue($response->isNotFound());
     }
 
+    public function testNotExistingNodeAddNodeprop()
+    {
+        $client = static::createClient();
+        $data = array(
+            'node' => 999999999999999,
+            'nodeprop' => 1 
+        );
+        $url = '/api/node_add_nodeprop/';
+
+        $crawler = $client->request('GET', $url, $data);
+        $response = $client->getResponse();
+
+        $this->assertTrue($response->isNotFound());
+    }
+
     public function testNodeRemoveNodeprop()
     {
         $client = static::createClient();
@@ -109,6 +124,24 @@ class ApiControllerTest extends FunctionalTestCase
         $data = array(
             'node' => 1,
             'nodeprop' => 99999999999999
+        );
+        $url = '/api/node_remove_nodeprop/';
+
+        $crawler = $client->request('GET', $url, $data);
+        $response = $client->getResponse();
+
+        $this->assertTrue($response->isNotFound());
+    }
+
+    /**
+     * Test removing a empty nodeprop from a node
+     */
+    public function testNodeRemoveEmptyNodeprop()
+    {
+        $client = static::createClient();
+        $data = array(
+            'node' => 1,
+            'nodeprop' => ''
         );
         $url = '/api/node_remove_nodeprop/';
 
