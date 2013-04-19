@@ -58,7 +58,7 @@ Noma Authors
 
 Noma Copyright
 --------------
-Copyright (c) 2012 Jochem Kossen, Ivo Schooneman, Thomas van der Jagt
+Copyright (c) 2012,2013 Jochem Kossen, Ivo Schooneman, Thomas van der Jagt
 
 Symfony2 Copyright
 ------------------
